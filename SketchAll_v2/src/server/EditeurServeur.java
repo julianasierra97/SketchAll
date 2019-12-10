@@ -11,6 +11,7 @@ import java.util.HashMap ;
 import java.util.List;
 
 import communication.EmetteurUnicast ;
+import main.FrameClient;
 
 //classe d'éditeur présente sur le serveur :
 //- pour pouvoir invoquer des méthodes à distance, elle doit étendre UnicastRemote object ou implémenter l'interface Remote
@@ -38,6 +39,9 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	
 	// une strutcure pour stocker tous les dessins et y accéder facilement 
 	private HashMap<String, RemoteDessinServeur> sharedDrawings = new HashMap<String, RemoteDessinServeur> () ;
+	
+	// liste des joueurs
+	private List<String> playerList;
 
 	// le constructeur du serveur : il le déclare sur un port rmi de la machine d'exécution
 	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate) throws RemoteException {
@@ -46,6 +50,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		this.portRMI = portRMIServeur ;
 		this.portEmission = portEmissionUpdate ;
 		transmitters = new ArrayList<EmetteurUnicast> () ;
+		playerList = new ArrayList<String>();
 		try {
 			// attachcement sur serveur sur un port identifié de la machine d'exécution
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMIServeur + "/" + nomServeur, this) ;
@@ -131,6 +136,10 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	@Override
 	public void answer (String question) throws RemoteException {
 //		System.out.println ("SERVER : the question was : " + question) ;   
+	}
+	
+	public void addPlayer(String username) throws RemoteException{
+		this.playerList.add(username);
 	}
 
 }

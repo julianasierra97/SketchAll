@@ -40,6 +40,8 @@ private static final long serialVersionUID = 1L ;
 	
 	private EditeurClient editeur;
 	
+	private String username;
+	
 	
 
 		// Constructeur à qui on transmet les informations suivantes :
@@ -47,8 +49,9 @@ private static final long serialVersionUID = 1L ;
 		// - nom du serveur distant
 		// - nom de la machine sur laquelle se trouve le serveur
 		// - numéro de port sur lequel est déclaré le serveur sur la machine distante
-		FrameClient (final String clientMachineName, final String serverEditorName, final String serverMachineName, final int serverRMIPort) {
+		FrameClient (final String clientMachineName, final String serverEditorName, final String serverMachineName, final int serverRMIPort, final String username) {
 			this.clientMachineName = clientMachineName ;
+			this.username = username;
 			try {
 				// tentative de connexion au serveur distant
 				server = (RemoteEditeurServeur)Naming.lookup ("//" + serverMachineName + ":" + serverRMIPort + "/" + serverEditorName) ;
@@ -79,6 +82,15 @@ private static final long serialVersionUID = 1L ;
 			threadRecepteur = new Thread (RecepteurUnicast) ;
 			// démarrage effectif du Thread
 			threadRecepteur.start () ;
+			
+			// ajout du joueur dans la liste serveur
+			try {
+				server.addPlayer(this.username);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			// demande d'affichage de l'éditeur
 			// - faite "seulement"/"tardivement" ici pour que tous les objets récupérés du serveur apparaissent bien du premier coup
 			
