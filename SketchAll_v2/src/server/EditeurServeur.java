@@ -87,11 +87,11 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 
 	// méthodes permettant d'ajouter un nouveau dessin dans le système
 	@Override
-	public synchronized RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color) throws RemoteException {
+	public synchronized RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color, String shapeType) throws RemoteException {
 		// création d'un nouveau nom, unique, destiné à servir de clé d'accès au dessin
 		// et création d'un nouveau dessin de ce nom et associé également à un émetteur multicast...
 		// attention : la classe Dessin utilisée ici est celle du package serveur (et pas celle du package client)
-		RemoteDessinServeur drawing = new DessinServeur ("dessin" + nextId (), transmitters, color) ;
+		RemoteDessinServeur drawing = new DessinServeur ("dessin" + nextId (), transmitters, color, shapeType) ;
 		// enregistrement du dessin pour accès rmi distant
 		registerObject (drawing) ;
 		// ajout du dessin dans la liste des dessins pour accès plus efficace au dessin

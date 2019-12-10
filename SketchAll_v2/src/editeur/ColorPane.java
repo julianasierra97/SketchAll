@@ -67,11 +67,7 @@ public class ColorPane extends JPanel {
 	JButton greyButton = new JButton();
 	JButton platinumButton = new JButton();
 	JButton whiteButton = new JButton();
-	
-	JButton otherButton = new JButton();
-	
-	ColorChooser colorChooser = new ColorChooser(this);
-	
+		
 	public ColorPane(EditeurClient editor, ToolPane tool) {
 		this.editor = editor;
 		setLayout(new GridBagLayout());
@@ -119,22 +115,6 @@ public class ColorPane extends JPanel {
 			});
 		}
 		
-		otherButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				colorChooserInitialize();
-				colorChooser.addPropertyChangeListener(new PropertyChangeListener() {
-		            @Override
-		            public void propertyChange(PropertyChangeEvent e) {
-		            	oldColor = newColor;
-		                newColor = colorChooser.getColor();
-		                colorChanged();
-		                for (JButton button : buttonList) {
-							button.setBorder(BorderFactory.createBevelBorder(0, new Color(150,150,150), new Color(150,150,150)));
-						}
-		            }
-				});
-			}
-		});
 	}
 	
     public void addPropertyChangeListener(PropertyChangeListener change) {
@@ -143,10 +123,6 @@ public class ColorPane extends JPanel {
 
     public void removePropertyChangeListener(PropertyChangeListener change) {
     	colorChange.removePropertyChangeListener(change);
-    }
-    
-    public void colorChooserInitialize() {
-    	colorChooser.initialize(this);
     }
     
     public Color getColor() {
@@ -231,8 +207,6 @@ public class ColorPane extends JPanel {
         greyButton.setBackground(new Color(120,120,120));
         platinumButton.setBackground(new Color(185,185,185));
         whiteButton.setBackground(new Color(255,255,255));
-        
-        otherButton.setText("Choose another color");
 	}
 	
 	public void addButtonsToPane() {
@@ -247,22 +221,19 @@ public class ColorPane extends JPanel {
         add(strawberryButton, gbc);
         gbc.gridx++;
         add(coralButton, gbc);
-        
-        gbc.gridx = 0;
-        gbc.gridy = 1;        
+        gbc.gridx++;      
         add(chocolateButton, gbc);
         gbc.gridx++;
         add(orangeButton, gbc);
         gbc.gridx++;
         add(carrotButton, gbc);
-        gbc.gridx++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;  
         add(sunshineButton, gbc);
         gbc.gridx++;
         add(yellowButton, gbc);
-        gbc.gridx++;
-        
-        gbc.gridx = 0;
-        gbc.gridy = 2;        
+        gbc.gridx++;     
         add(forestButton, gbc);
         gbc.gridx++;
         add(oliveButton, gbc);
@@ -272,12 +243,11 @@ public class ColorPane extends JPanel {
         add(limeButton, gbc);
         gbc.gridx++;
         add(mintButton, gbc);
-        gbc.gridx++;
-        
-        gbc.gridx = 0;
-        gbc.gridy = 3;        
+        gbc.gridx++;       
         add(navyButton, gbc);
-        gbc.gridx++;
+
+        gbc.gridx = 0;
+        gbc.gridy = 2; 
         add(royalButton, gbc);
         gbc.gridx++;
         add(blueButton, gbc);
@@ -285,10 +255,7 @@ public class ColorPane extends JPanel {
         add(aquaButton, gbc);
         gbc.gridx++;
         add(skyButton, gbc);
-        gbc.gridx++;
-        
-        gbc.gridx = 0;
-        gbc.gridy = 4;        
+        gbc.gridx++;        
         add(grapeButton, gbc);
         gbc.gridx++;
         add(purpleButton, gbc);
@@ -296,27 +263,22 @@ public class ColorPane extends JPanel {
         add(raspberryButton, gbc);
         gbc.gridx++;
         add(magentaButton, gbc);
-        gbc.gridx++;
-        add(lilaButton, gbc);
-        gbc.gridx++;
         
-        gbc.gridx = 0;
-        gbc.gridy = 5;        
-        add(blackButton, gbc);
-        gbc.gridx++;
-        add(charcoalButton, gbc);
-        gbc.gridx++;
-        add(greyButton, gbc);
-        gbc.gridx++;
-        add(platinumButton, gbc);
-        gbc.gridx++;
-        add(whiteButton, gbc);
-        gbc.gridx++;
         
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(otherButton, gbc);        
+//        gbc.gridx = 0;
+//        gbc.gridy = 3; 
+//        add(lilaButton, gbc);
+//        gbc.gridx++;       
+//        add(blackButton, gbc);
+//        gbc.gridx++;
+//        add(charcoalButton, gbc);
+//        gbc.gridx++;
+//        add(greyButton, gbc);
+//        gbc.gridx++;
+//        add(platinumButton, gbc);
+//        gbc.gridx++;
+//        add(whiteButton, gbc);
+//        gbc.gridx++;
 	}
 	
 }

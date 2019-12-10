@@ -15,8 +15,9 @@ public class ToolPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	GridBagConstraints gbc;
-	SizePane sizePane;
+	ShapePane shape;
 	ColorPane color;
+	SizePane size;
 	
 	public ToolPane(EditeurClient editor) {
 		setLayout(new GridBagLayout());
@@ -29,29 +30,33 @@ public class ToolPane extends JPanel {
 	    Border borderBis = BorderFactory.createBevelBorder(0, innerBorder, outerBorder, innerShadow, outerShadow);
 		setBorder(borderBis);
 		
-		sizePane = new SizePane(editor, this);
+		size = new SizePane(editor, this);
+		shape = new ShapePane(editor, this);
 		color = new ColorPane(editor, this);
 		
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 1;
+        gbc.weightx = 0.33;
         gbc.weighty = 0.33;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);		//Top, left, bottom, right
 		
-		gbc.gridy++;
-        add(sizePane, gbc);
-        sizePane.setPreferredSize(new Dimension(400,500));
+        add(size, gbc);
+        size.setPreferredSize(new Dimension(50,90));
+        
+		gbc.gridx++;
+        add(shape, gbc);
+        shape.setPreferredSize(new Dimension(50,90));
 		
-        gbc.gridy++;
+        gbc.gridx++;
         add(color, gbc);
-        color.setPreferredSize(new Dimension(400,600));
+        color.setPreferredSize(new Dimension(200,90));
 	}
 	
-	public SizePane getSizePane() {
-		return sizePane;
+	public ShapePane getShapePane() {
+		return shape;
 	}
 	
 }

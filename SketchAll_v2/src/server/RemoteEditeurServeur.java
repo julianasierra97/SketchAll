@@ -18,7 +18,7 @@ public interface RemoteEditeurServeur extends Remote {
    int getPortEmission (InetAddress clientAdress) throws RemoteException ;
    void answer (String question) throws RemoteException ;
    int getRMIPort () throws RemoteException ;
-   RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color) throws RemoteException ;
+   RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color, String shapeType) throws RemoteException ;
    ArrayList <RemoteDessinServeur> getDessinsPartages () throws RemoteException ;
    RemoteDessinServeur getDessin (String name) throws RemoteException ;
    void addPlayer(String username)throws RemoteException;

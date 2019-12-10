@@ -11,13 +11,14 @@ import java.rmi.RemoteException ;
 
 public interface RemoteDessinServeur extends Remote {
 
-   void setLocation (int x, int y) throws RemoteException ;
-   void setBounds (int x, int y, int w, int h) throws RemoteException ;
-   String getName () throws RemoteException ;
-   Color getColor () throws RemoteException;
-   int getX () throws RemoteException ;
-   int getY () throws RemoteException ;
-   int getWidth () throws RemoteException ;
-   int getHeight () throws RemoteException ;
+	void setLocation (int x, int y) throws RemoteException ;
+	void setBounds(int x, int y, int w, int h) throws RemoteException;
+	String getName() throws RemoteException;
+	Color getColor() throws RemoteException;
+	String getShapeType() throws RemoteException;
+	int getX() throws RemoteException;
+	int getY() throws RemoteException;
+	int getWidth() throws RemoteException;
+	int getHeight() throws RemoteException ;
 
 }

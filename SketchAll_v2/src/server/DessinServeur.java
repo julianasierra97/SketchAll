@@ -22,6 +22,7 @@ public class DessinServeur extends UnicastRemoteObject implements RemoteDessinSe
 	private int h ;
 	private Color color ;
 	private String name ;
+	private String shapeType ;
 	
 	// un attribut permettant au Dessin de diffuser directement ses mises à jour, sans passer par le serveur associé
 	// - cet attribut n'est pas Serializable, du coup on le déclare transient pour qu'il ne soit pas inclu dans la sérialisation
@@ -30,16 +31,18 @@ public class DessinServeur extends UnicastRemoteObject implements RemoteDessinSe
 	private static final long serialVersionUID = 1L ;
 
 	// constructeur du Dessin sur le serveur : il diffuse alors qu'il faut créer un nouveau dessin sur tous les clients 
-	public DessinServeur (String name, List<EmetteurUnicast> senders, Color color) throws RemoteException {
+	public DessinServeur (String name, List<EmetteurUnicast> senders, Color color, String shapeType) throws RemoteException {
 		this.emetteurs = senders ;
 		this.name = name ;
 		this.color = color ;
+		this.shapeType = shapeType ;
 		HashMap<String, Object> hm = new HashMap <String, Object> () ;
 		hm.put ("x", new Integer (0)) ;
 		hm.put ("y", new Integer (0)) ;
 		hm.put ("w", new Integer (0)) ;
 		hm.put ("h", new Integer (0)) ;
 		hm.put ("color", color) ;
+		hm.put ("shapeType", shapeType) ;
 		// envoi des mises à jour à tous les clients, via la liste des émetteurs
 		for (EmetteurUnicast sender : senders) {
 			sender.diffuseMessage ("Dessin", getName (), hm) ;
@@ -103,6 +106,11 @@ public class DessinServeur extends UnicastRemoteObject implements RemoteDessinSe
 	@Override
 	public Color getColor() throws RemoteException {
 		return color;
+	}
+	
+	@Override
+	public String getShapeType() throws RemoteException {
+		return shapeType;
 	}
 
 }

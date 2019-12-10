@@ -32,12 +32,12 @@ public class SizePane extends JPanel {
 	GridBagConstraints gbc;
 	List<SizeButton> buttonList = new ArrayList<SizeButton>();
 	int oldSize;
-	int newSize = 3 ;
+	int newSize = 7 ;
 	
 	ButtonGroup sizeGroup = new ButtonGroup();
-	SizeButton smallButton = new SizeButton("Small", 3);
-	SizeButton mediumButton = new SizeButton("Medium", 6);
-	SizeButton bigButton = new SizeButton("Big", 9);
+	SizeButton smallButton = new SizeButton("Small", 6);
+	SizeButton mediumButton = new SizeButton("Medium", 9);
+	SizeButton bigButton = new SizeButton("Big", 12);
 	
 	public SizePane(EditeurClient editor, ToolPane tool) {
 		this.editor = editor;
@@ -112,9 +112,9 @@ public class SizePane extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;  
         add(smallButton, gbc);
-        gbc.gridy++;
+        gbc.gridx++;
         add(mediumButton, gbc);
-        gbc.gridy++;
+        gbc.gridx++;
         add(bigButton, gbc);
 	}
 	

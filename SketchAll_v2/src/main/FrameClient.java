@@ -94,7 +94,7 @@ private static final long serialVersionUID = 1L ;
 			// demande d'affichage de l'éditeur
 			// - faite "seulement"/"tardivement" ici pour que tous les objets récupérés du serveur apparaissent bien du premier coup
 			
-			this.setSize(1300,1000);
+			this.setSize(1000,600);
 			this.setLayout(new BorderLayout());
 			this.editeur = new EditeurClient(this);
 			this.getContentPane().add(editeur,BorderLayout.CENTER);
