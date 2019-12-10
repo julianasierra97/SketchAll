@@ -5,8 +5,8 @@ import java.net.InetAddress;
 import java.rmi.Remote;
 import java.rmi.RemoteException ;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import main.FrameClient;
 
 // interface qui décrit les services offerts par un proxy d'éditeur(côté serveur) :
 // - quand un client demandera à accéder à distance à un tel éditeur, il récupérera un proxy de cet éditeur
@@ -21,6 +21,9 @@ public interface RemoteEditeurServeur extends Remote {
    RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color, String shapeType) throws RemoteException ;
    ArrayList <RemoteDessinServeur> getDessinsPartages () throws RemoteException ;
    RemoteDessinServeur getDessin (String name) throws RemoteException ;
-   void addPlayer(String username)throws RemoteException;
+   RemoteUserServeur addPlayer(String username)throws RemoteException;
+   RemoteUserServeur getPlayer (String username) throws RemoteException;
+   HashMap<String,RemoteUserServeur> getPlayerList () throws RemoteException ;
+   
 
 }

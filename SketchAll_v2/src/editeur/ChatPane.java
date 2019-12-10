@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -17,6 +16,11 @@ import javax.swing.JTextField;
 public class ChatPane extends JPanel implements ActionListener{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final String ENVOYER = "envoyer";
 
 	private ArrayList<String> messages;

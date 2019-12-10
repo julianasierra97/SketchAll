@@ -11,7 +11,6 @@ import java.util.HashMap ;
 import java.util.List;
 
 import communication.EmetteurUnicast ;
-import main.FrameClient;
 
 //classe d'éditeur présente sur le serveur :
 //- pour pouvoir invoquer des méthodes à distance, elle doit étendre UnicastRemote object ou implémenter l'interface Remote
@@ -41,7 +40,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	private HashMap<String, RemoteDessinServeur> sharedDrawings = new HashMap<String, RemoteDessinServeur> () ;
 	
 	// liste des joueurs
-	private List<String> playerList;
+	private HashMap<String, RemoteUserServeur> playerList = new HashMap<String, RemoteUserServeur> () ;
 
 	// le constructeur du serveur : il le déclare sur un port rmi de la machine d'exécution
 	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate) throws RemoteException {
@@ -50,7 +49,6 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		this.portRMI = portRMIServeur ;
 		this.portEmission = portEmissionUpdate ;
 		transmitters = new ArrayList<EmetteurUnicast> () ;
-		playerList = new ArrayList<String>();
 		try {
 			// attachcement sur serveur sur un port identifié de la machine d'exécution
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMIServeur + "/" + nomServeur, this) ;
@@ -74,6 +72,20 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 			e.printStackTrace () ;
 			try {
 				System.out.println ("échec lors de l'ajout de l'objet " + dessin.getName () + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	//m�thode permettant d'enregistrer un utilisateur sur un port rmi
+	public void registerPlayer (RemoteUserServeur player) {
+		try {
+			Naming.rebind ("//" + nomMachineServeur + ":" + portRMI + "/" + player.getUsername(), player) ;
+		} catch (Exception e) {
+			e.printStackTrace () ;
+			try {
+				System.out.println ("échec lors de l'ajout de l'objet " + player.getUsername() + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
@@ -107,6 +119,8 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		//System.out.println ("getDessin " + name + " dans dessinsPartagés = " + dessinsPartages) ;
 		return sharedDrawings.get (name) ;
 	}
+	
+	
 
 	// méthode qui incrémente le compteur de dessins pour avoir un id unique pour chaque dessin :
 	// dans une version ultérieure avec récupération de dessins à aprtir d'une sauvegarde, il faudra également avoir sauvegardé ce nombre...
@@ -138,8 +152,20 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 //		System.out.println ("SERVER : the question was : " + question) ;   
 	}
 	
-	public void addPlayer(String username) throws RemoteException{
-		this.playerList.add(username);
+	public synchronized RemoteUserServeur addPlayer(String username) throws RemoteException{
+		RemoteUserServeur player = new UserServeur(username, transmitters);
+		registerPlayer(player);
+		playerList.put (player.getUsername (), player) ;
+		System.out.println(playerList);
+		return player;
+	}
+	
+	public synchronized RemoteUserServeur getPlayer (String username) throws RemoteException {
+		return playerList.get (username) ;
+	}
+
+	public synchronized HashMap<String,RemoteUserServeur> getPlayerList () throws RemoteException {
+		return this.playerList;
 	}
 
 }

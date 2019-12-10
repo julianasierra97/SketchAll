@@ -81,6 +81,10 @@ public class RecepteurUnicast extends Thread implements Runnable {
 				//System.out.println ("received Dessin") ;
 				// ajout d'un dessin
 				localClient.getEditeur().addDrawing (name, (int)hm.get("x"), (int)hm.get("y"), (int)hm.get("w"), (int)hm.get("h"), (Color)hm.get("color"), (String)hm.get("shapeType"));
+			}else if (command.equals ("User")) {
+				//System.out.println ("received User") ;
+				// ajout d'un joueur
+				localClient.addPlayer(name);
 			}
 		}
 	}

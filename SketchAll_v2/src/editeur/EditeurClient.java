@@ -148,9 +148,6 @@ public class EditeurClient extends JPanel {
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
-			if (proxy == null) {
-				//System.out.println("proxy " + proxyName + " null");
-			}
 			// ajout du dessin
 			addDrawing (proxy, proxyName, x, y, w, h, color, shapeType) ;
 		} else {
