@@ -36,6 +36,7 @@ public class EditeurClient extends JPanel {
 	private ZoneDeDessin ZoneDeDessin ;
 	private ToolPane toolPane;
 	private ChatPane chatPane;
+	private JPanel chronometre;
 	
 	// une table pour stocker tous les dessins produits :
 	// - elle est redondante avec le contenu de la ZoneDe Dessin
@@ -56,9 +57,12 @@ public class EditeurClient extends JPanel {
 		ZoneDeDessin = new ZoneDeDessin (this) ;
 		toolPane = new ToolPane (this);
 		chatPane= new ChatPane();
+		chronometre= new Chronometre();
 		add(ZoneDeDessin, BorderLayout.CENTER);
 		add(toolPane, BorderLayout.SOUTH);
 		add(chatPane,BorderLayout.EAST);
+		add(chronometre,BorderLayout.NORTH);
+		
 	    this.setPreferredSize(new Dimension(700,700));
 	    
 
@@ -202,5 +206,6 @@ public class EditeurClient extends JPanel {
 	public void setShape(DessinClient shape) {
 		shapeToCreate = shape;
 	}
+	
 	
 }

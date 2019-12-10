@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -13,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChatPane extends JPanel implements ActionListener{
+public class ChatPane extends JPanel implements KeyListener{
 
 	
 	/**
@@ -39,16 +41,15 @@ public class ChatPane extends JPanel implements ActionListener{
 		setSize(200, 400);
 		
 		messages= new ArrayList<>();
-		
-		buttonEnvoyer= new JButton("Envoyer");
-		buttonEnvoyer.setActionCommand(ENVOYER);
-		buttonEnvoyer.addActionListener(this);
-		buttonEnvoyer.setSize(60, 80);
+
+
 		
 		messageDisplay= new JTextArea();
+		messageDisplay.setEditable(false);
 		
 		textToSend= new JTextField();
-		setBorder( BorderFactory.createLineBorder(Color.GRAY, 2));
+		textToSend.addKeyListener(this);
+		setBorder( BorderFactory.createTitledBorder("Chat"));
 		
 		setLayout(new BorderLayout());
 		
@@ -58,8 +59,7 @@ public class ChatPane extends JPanel implements ActionListener{
 		panelSouth.setLayout(new BorderLayout());
 		
 		panelSouth.add(textToSend, BorderLayout.CENTER);
-		
-		panelSouth.add(buttonEnvoyer, BorderLayout.SOUTH);
+	
 		
 		add(panelSouth, BorderLayout.SOUTH);
 		
@@ -68,11 +68,7 @@ public class ChatPane extends JPanel implements ActionListener{
 		
 		
 		add(panelSouth, BorderLayout.SOUTH);
-		
-//		
-//		chronometre= new Chronometre();
-//		
-//		add(chronometre,BorderLayout.NORTH);
+
 		
 		setVisible(true);
 		
@@ -81,18 +77,34 @@ public class ChatPane extends JPanel implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals(ENVOYER)) {
-			messages.add(textToSend.getText());
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("entro");
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_ENTER) {
+			messages.add(textToSend.getText());
+System.out.println("entro");
 			String text= "";
 			for (String string : messages) {
 				text+=string+"\n";
 			}
 			textToSend.setText("");
 			messageDisplay.setText(text);
-			repaint();
+		
+		
 		}
+	
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	
