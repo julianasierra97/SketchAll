@@ -35,7 +35,7 @@ public class EditeurClient extends JPanel {
 	// l'élément visuel dans lequel on va manipuler des dessins 
 	private ZoneDeDessin ZoneDeDessin ;
 	private ToolPane toolPane;
-	
+	private ChatPane chatPane;
 	
 	// une table pour stocker tous les dessins produits :
 	// - elle est redondante avec le contenu de la ZoneDe Dessin
@@ -55,8 +55,10 @@ public class EditeurClient extends JPanel {
 		this.setLayout(new BorderLayout());
 		ZoneDeDessin = new ZoneDeDessin (this) ;
 		toolPane = new ToolPane (this);
+		chatPane= new ChatPane();
 		add(ZoneDeDessin, BorderLayout.CENTER);
 		add(toolPane, BorderLayout.SOUTH);
+		add(chatPane,BorderLayout.EAST);
 	    this.setPreferredSize(new Dimension(700,700));
 	    
 
