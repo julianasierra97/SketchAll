@@ -1,10 +1,7 @@
 package main;
 
 
-
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,15 +58,12 @@ class Login   {
 		return false;
 	}
 
-	@SuppressWarnings("unused")
-	public void writteFile(String userName, String passsword) 
+	
+	public void writeFile(String userName, String passsword) 
 	{
 
 
 		try (InputStream in = new FileInputStream("../SketchAll_v2/src/main/users.properties")) {
-			if (in == null) {
-				throw new FileNotFoundException();
-			}
 			prop.load(in);
 			prop.setProperty(userName, passsword);
 

@@ -8,7 +8,7 @@ public class MainEditeurServeur {
 		//String nomMachineRMI = "192.168.43.146" ;
 		String nomMachineRMI = "localhost" ; // mettre l'adresse IP de votre serveur ici
 		//String nomMachineRMI = "10.29.227.68" ;
-		int portRMI = 2010 ;
+		int portRMI = 2010;
 		String nomServeur = "EditeurCollaboratif" ;
 		int portEmissionUpdates = 4020 ;
 		System.out.println ("Création d'un serveur avec les caractéristiques :") ;

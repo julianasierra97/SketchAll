@@ -23,7 +23,7 @@ public class ModificationListener implements MouseListener, MouseMotionListener 
    }
 
    public void mouseEntered (MouseEvent e) {
-		drawing.setCursor (Cursor.getPredefinedCursor (Cursor.DEFAULT_CURSOR)) ;
+		drawing.setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR)) ;
    }
 
    public void mouseExited (MouseEvent e) {

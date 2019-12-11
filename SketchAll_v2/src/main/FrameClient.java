@@ -24,21 +24,21 @@ private static final long serialVersionUID = 1L ;
 	// le Thread pour pouvoir recevoir des mises Ã  jour en provenance du serveur
 	private Thread threadRecepteur ;
 	
-	// le rï¿½cepteur de messages diffusï¿½s aux abonnï¿½s
+	// le récepteur de messages diffusés aux abonnés
 	private RecepteurUnicast RecepteurUnicast ;
 	
 	// le serveur distant qui centralise toutes les informations
 	private RemoteEditeurServeur server ;
 	
-	// le nom de la machine qui hï¿½berge l'ï¿½diteur local
+	// le nom de la machine qui héberge l'éditeur local
 	protected String clientMachineName ;
 	
-	// le port rmi sur lequel est dï¿½clarï¿½ le serveur distant
+	// le port rmi sur lequel est déclaré le serveur distant
 	protected int RMIPort ;
 	
 	// le nom de la machine sur laquelle se trouve le serveur distant :
-	// - le systÃ¨me saura calculer l'adresse IP de la machine Ã  partir de son nom
-	// - sinon on met directement l'adresse IP du serveur dans cette chaine de caractÃ¨re 
+	// - le système saura calculer l'adresse IP de la machine Ã  partir de son nom
+	// - sinon on met directement l'adresse IP du serveur dans cette chaine de caractère 
 	protected String serverMachineName ;
 	
 	private EditeurClient editeur;
@@ -60,10 +60,10 @@ private static final long serialVersionUID = 1L ;
 
 
 		// Constructeur Ã  qui on transmet les informations suivantes :
-		// - nom de l'ï¿½diteur
+		// - nom de l'éditeur
 		// - nom du serveur distant
 		// - nom de la machine sur laquelle se trouve le serveur
-		// - numï¿½ro de port sur lequel est dï¿½clarï¿½ le serveur sur la machine distante
+		// - numéro de port sur lequel est déclaré le serveur sur la machine distante
 		FrameClient (final String clientMachineName, final String serverEditorName, final String serverMachineName, final int serverRMIPort, final String username) {
 			this.clientMachineName = clientMachineName ;
 			this.username = username;
@@ -72,7 +72,7 @@ private static final long serialVersionUID = 1L ;
 			try {
 				// tentative de connexion au serveur distant
 				server = (RemoteEditeurServeur)Naming.lookup ("//" + serverMachineName + ":" + serverRMIPort + "/" + serverEditorName) ;
-				// invocation d'une premiÃ¨re mï¿½thode juste pour test
+				// invocation d'une première méthode juste pour test
 				server.answer ("hello from " + getName ()) ;
 				
 			} catch (Exception e) {
@@ -81,13 +81,13 @@ private static final long serialVersionUID = 1L ;
 				System.exit (1) ;
 			}
 			try {
-				// crï¿½ation d'un rï¿½cepteur unicast en demandant l'information de numï¿½ro port au serveur
+				// création d'un récepteur unicast en demandant l'information de numéro port au serveur
 				// en mÃªme temps on transmet au serveur l'adresse IP de la machine du client au serveur
-				// de faÃ§on Ã  ce que ce dernier puisse par la suite envoyer des messages de mise Ã  jour Ã  ce rï¿½cepteur 
+				// de faÃ§on Ã  ce que ce dernier puisse par la suite envoyer des messages de mise Ã  jour Ã  ce récepteur 
 				RecepteurUnicast = new RecepteurUnicast (InetAddress.getByName (clientMachineName), server.getPortEmission (InetAddress.getByName (clientMachineName))) ;
 				// on aimerait bien demander automatiquement quel est l'adresse IP de la machine du client,
-				// mais le problÃ¨me est que celle-ci peut avoir plusieurs adresses IP (filaire, wifi, ...)
-				// et qu'on ne sait pas laquelle sera retournï¿½e par InetAddress.getLocalHost ()...
+				// mais le problème est que celle-ci peut avoir plusieurs adresses IP (filaire, wifi, ...)
+				// et qu'on ne sait pas laquelle sera retournée par InetAddress.getLocalHost ()...
 				//recepteurUnicast = new RecepteurUnicast (serveur.getPortEmission (InetAddress.getLocalHost ())) ;
 				RecepteurUnicast.setLocalClient (this) ;
 			} catch (RemoteException e1) {
@@ -95,9 +95,9 @@ private static final long serialVersionUID = 1L ;
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			}
-			// crï¿½ation d'un Thread pour pouvoir recevoir les messages du serveur en parallÃ¨le des interactions avec les dessins
+			// création d'un Thread pour pouvoir recevoir les messages du serveur en parallèle des interactions avec les dessins
 			threadRecepteur = new Thread (RecepteurUnicast) ;
-			// dï¿½marrage effectif du Thread
+			// démarrage effectif du Thread
 			threadRecepteur.start () ;
 			
 			try {
@@ -117,15 +117,14 @@ private static final long serialVersionUID = 1L ;
 			try {
 				if (! server.getPlayerList().containsKey (this.username)) {
 					RemoteUserServeur proxy = server.addPlayer(this.username);
-					players.put(this.username, new Player(proxy, this.username));
 				}
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			// demande d'affichage de l'ï¿½diteur
-			// - faite "seulement"/"tardivement" ici pour que tous les objets rï¿½cupï¿½rï¿½s du serveur apparaissent bien du premier coup
+			// demande d'affichage de l'éditeur
+			// - faite "seulement"/"tardivement" ici pour que tous les objets récupérés du serveur apparaissent bien du premier coup
 			
 			this.setSize(1500,1000);
 			this.setLayout(new BorderLayout());

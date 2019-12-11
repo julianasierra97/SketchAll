@@ -6,7 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class MainFrameClient {
 
 	// main permettant de lancer un éditeur local 
-		public MainFrameClient(){
+		public static void main (String args[]){
 			// le nom de la machine qui héberge le serveur distant
 			// String nomMachineServeur = "10.29.227.68" ;
 			String serverMachineName = "localhost" ; // mettre l'adresse IP de votre serveur ici
@@ -33,7 +33,7 @@ public class MainFrameClient {
 			}
 
 			
-			new FrameClient (clientMachineName, collaborativeEditorName, serverMachineName, serverRMIPort, "user2") ;
+			new LoginFrame (clientMachineName, collaborativeEditorName, serverMachineName, serverRMIPort) ;
 
 		}
 	
