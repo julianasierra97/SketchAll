@@ -23,7 +23,7 @@ public class Chronometre extends JPanel {
 	    
 	    private JLabel countLabel;
 	
-	public Chronometre(){
+	public Chronometre(EditeurClient editeur){
 	      progressBar = new JProgressBar(0, 60);
 	      progressBar.setValue(60);
 	      
@@ -36,7 +36,7 @@ public class Chronometre extends JPanel {
 	      
 	      add(countLabel, BorderLayout.EAST);
 	      
-	     MyTimerTask tt= new MyTimerTask(progressBar,countLabel);
+	     MyTimerTask tt= new MyTimerTask(progressBar,countLabel, editeur);
 	     Timer timer = new Timer(true);
 	     timer.scheduleAtFixedRate(tt, 0, 10*1000);
 

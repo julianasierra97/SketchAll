@@ -57,7 +57,7 @@ public class EditeurClient extends JPanel {
 		ZoneDeDessin = new ZoneDeDessin (this) ;
 		toolPane = new ToolPane (this);
 
-		chronometre= new Chronometre();
+		chronometre= new Chronometre(this);
 		add(ZoneDeDessin, BorderLayout.CENTER);
 		add(toolPane, BorderLayout.SOUTH);
 		
@@ -206,6 +206,14 @@ public class EditeurClient extends JPanel {
 	
 	public void setShape(DessinClient shape) {
 		shapeToCreate = shape;
+	}
+
+	public void newGame() {
+		drawings.clear();
+		getZoneDeDessin().removeAll();
+		repaint();
+		revalidate();
+		
 	}
 	
 	

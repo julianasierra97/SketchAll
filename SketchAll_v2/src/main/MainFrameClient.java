@@ -1,9 +1,12 @@
 package main;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class MainFrameClient {
 
 	// main permettant de lancer un éditeur local 
-		public static void main (String [] args) {
+		public MainFrameClient(){
 			// le nom de la machine qui héberge le serveur distant
 			// String nomMachineServeur = "10.29.227.68" ;
 			String serverMachineName = "localhost" ; // mettre l'adresse IP de votre serveur ici
@@ -20,6 +23,16 @@ public class MainFrameClient {
 			System.out.println ("port rmi du serveur : " + serverRMIPort) ;
 			System.out.println ("nom de l'univers partagé : " + collaborativeEditorName) ;
 			// instanciation d'un client déporté qui fera le lien avec le navigateur
+			
+			try {
+				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
 			new FrameClient (clientMachineName, collaborativeEditorName, serverMachineName, serverRMIPort, "user2") ;
 
 		}
