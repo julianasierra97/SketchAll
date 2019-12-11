@@ -20,7 +20,7 @@ public class MainFrameClient {
 			System.out.println ("port rmi du serveur : " + serverRMIPort) ;
 			System.out.println ("nom de l'univers partagé : " + collaborativeEditorName) ;
 			// instanciation d'un client déporté qui fera le lien avec le navigateur
-			new FrameClient (clientMachineName, collaborativeEditorName, serverMachineName, serverRMIPort, "user3") ;
+			new FrameClient (clientMachineName, collaborativeEditorName, serverMachineName, serverRMIPort, "user2") ;
 
 		}
 	

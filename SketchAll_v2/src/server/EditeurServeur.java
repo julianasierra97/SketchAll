@@ -167,5 +167,14 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	public synchronized HashMap<String,RemoteUserServeur> getPlayerList () throws RemoteException {
 		return this.playerList;
 	}
+	
+	public void sendMessage(String username, String message) throws RemoteException{
+		HashMap<String, Object> hm = new HashMap <String, Object> () ;
+		hm.put("name", username);
+		hm.put("message", message);
+		for (EmetteurUnicast sender : transmitters) {
+			sender.diffuseMessage ("Send message", username, hm) ;
+		}
+	}
 
 }

@@ -2,7 +2,6 @@ package main;
 
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 
 import communication.RecepteurUnicast;
-import drawing.DessinClient;
 import editeur.EditeurClient;
 import server.RemoteEditeurServeur;
 import server.RemoteUserServeur;
@@ -53,6 +51,11 @@ private static final long serialVersionUID = 1L ;
 	private ChatPane chatPane;
 	
 	
+
+	
+
+
+
 
 		// Constructeur à qui on transmet les informations suivantes :
 		// - nom de l'�diteur
@@ -121,14 +124,14 @@ private static final long serialVersionUID = 1L ;
 			// demande d'affichage de l'�diteur
 			// - faite "seulement"/"tardivement" ici pour que tous les objets r�cup�r�s du serveur apparaissent bien du premier coup
 			
-			this.setSize(1000,600);
+			this.setSize(1500,1000);
 			this.setLayout(new BorderLayout());
 			this.editeur = new EditeurClient(this);
 			this.getContentPane().add(editeur,BorderLayout.CENTER);
 			this.setTitle("Paint");
 		    this.setLocationRelativeTo(null);
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    chatPane= new ChatPane();
+		    chatPane= new ChatPane(this);
 		    this.getContentPane().add(chatPane,BorderLayout.EAST);
 			
 			setVisible (true) ;
@@ -136,6 +139,8 @@ private static final long serialVersionUID = 1L ;
 		}
 		
 		
+
+
 		public synchronized void addPlayer(String username) {
 			if (! players.containsKey(username)) {
 				try {
@@ -168,4 +173,15 @@ private static final long serialVersionUID = 1L ;
 		}
 		
 		
+		public ChatPane getChatPane() {
+			return chatPane;
+		}
+		
+		public String getUsername() {
+			return username;
+		}
+
+		public void setChatPane(ChatPane chatPane) {
+			this.chatPane = chatPane;
+		}
 }

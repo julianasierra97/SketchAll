@@ -85,7 +85,11 @@ public class RecepteurUnicast extends Thread implements Runnable {
 				//System.out.println ("received User") ;
 				// ajout d'un joueur
 				localClient.addPlayer(name);
+			}else if (command.equals ("Send message")) {
+				// diffusion message
+				localClient.getChatPane().receiveMessage(name, (String)hm.get("message"));
 			}
+			
 		}
 	}
 

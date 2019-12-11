@@ -24,6 +24,7 @@ public interface RemoteEditeurServeur extends Remote {
    RemoteUserServeur addPlayer(String username)throws RemoteException;
    RemoteUserServeur getPlayer (String username) throws RemoteException;
    HashMap<String,RemoteUserServeur> getPlayerList () throws RemoteException ;
+   void sendMessage(String message, String username)throws RemoteException;
    
 
 }

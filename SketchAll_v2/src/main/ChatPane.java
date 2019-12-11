@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -30,9 +31,12 @@ public class ChatPane extends JPanel implements KeyListener{
 	
 	private JPanel panelSouth;
 	
-	public ChatPane () {
+	private FrameClient frame;
+	
+	public ChatPane (FrameClient frame) {
 		
-
+		this.frame = frame;
+		
 		setSize(200, 400);
 		
 		messages= new ArrayList<>();
@@ -72,21 +76,23 @@ public class ChatPane extends JPanel implements KeyListener{
 	}
 	
 	
-	public void recevoirMessage(String message) {
-		boolean alreadyDisplayed=false;
-		for (String string : messages) {
-			if(message.equals(string)) {
-				alreadyDisplayed=true;
-			}
-		}
-		if(!alreadyDisplayed) {
-			messages.add(message);
+	public void receiveMessage(String username, String message) {
+			
+			messages.add(username+ ": "+message);
 			String text= "";
 			for (String string : messages) {
 				text+=string+"\n";
 			}
 			
 			messageDisplay.setText(text);
+	}
+	
+	public void sendMessage(String message) {
+		try {
+			this.frame.getServer().sendMessage(this.frame.getUsername(),message);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -101,16 +107,8 @@ public class ChatPane extends JPanel implements KeyListener{
 
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_ENTER) {
-			messages.add(textToSend.getText());
-
-			String text= "";
-			for (String string : messages) {
-				text+=string+"\n";
-			}
+			sendMessage(textToSend.getText());
 			textToSend.setText("");
-			messageDisplay.setText(text);
-		
-		
 		}
 	
 		

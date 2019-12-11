@@ -52,7 +52,7 @@ public class ToolPane extends JPanel {
 		
         gbc.gridx++;
         add(color, gbc);
-        color.setPreferredSize(new Dimension(200,90));
+        color.setPreferredSize(new Dimension(200,200));
 	}
 	
 	public ShapePane getShapePane() {
