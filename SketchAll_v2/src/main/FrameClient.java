@@ -50,6 +50,8 @@ private static final long serialVersionUID = 1L ;
 
 	private ChatPane chatPane;
 	
+	private PlayersPane playersPane;
+	
 	
 
 	
@@ -66,6 +68,7 @@ private static final long serialVersionUID = 1L ;
 			this.clientMachineName = clientMachineName ;
 			this.username = username;
 			players = new HashMap<String, Player> ();
+			playersPane = new PlayersPane();
 			try {
 				// tentative de connexion au serveur distant
 				server = (RemoteEditeurServeur)Naming.lookup ("//" + serverMachineName + ":" + serverRMIPort + "/" + serverEditorName) ;
@@ -133,6 +136,8 @@ private static final long serialVersionUID = 1L ;
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    chatPane= new ChatPane(this);
 		    this.getContentPane().add(chatPane,BorderLayout.EAST);
+		    
+		    this.getContentPane().add(playersPane,BorderLayout.WEST);
 			
 			setVisible (true) ;
 			
@@ -153,9 +158,10 @@ private static final long serialVersionUID = 1L ;
 		}
 		
 		public synchronized void addPlayer(String username, RemoteUserServeur proxy) {
-			
-			players.put(username, new Player(proxy, username));
+			Player player = new Player(proxy, username);
+			players.put(username, player);
 			System.out.println(players);
+			playersPane.addPlayer(player);
 			
 		}
 		
