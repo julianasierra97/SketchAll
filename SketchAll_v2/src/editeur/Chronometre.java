@@ -12,7 +12,13 @@ import javax.swing.JProgressBar;
 
 
 public class Chronometre extends JPanel {
-	   private JProgressBar progressBar;
+	   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	private JProgressBar progressBar;
 
 	    
 	    private JLabel countLabel;

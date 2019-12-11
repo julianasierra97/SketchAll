@@ -13,6 +13,7 @@ import java.util.HashMap ;
 import javax.swing.JPanel;
 
 import drawing.DessinClient;
+import main.ChatPane;
 import main.FrameClient;
 import server.RemoteDessinServeur ;
 
@@ -35,7 +36,6 @@ public class EditeurClient extends JPanel {
 	// l'élément visuel dans lequel on va manipuler des dessins 
 	private ZoneDeDessin ZoneDeDessin ;
 	private ToolPane toolPane;
-	private ChatPane chatPane;
 	private JPanel chronometre;
 	
 	// une table pour stocker tous les dessins produits :
@@ -56,11 +56,12 @@ public class EditeurClient extends JPanel {
 		this.setLayout(new BorderLayout());
 		ZoneDeDessin = new ZoneDeDessin (this) ;
 		toolPane = new ToolPane (this);
-		chatPane= new ChatPane();
+
 		chronometre= new Chronometre();
 		add(ZoneDeDessin, BorderLayout.CENTER);
 		add(toolPane, BorderLayout.SOUTH);
-		add(chatPane,BorderLayout.EAST);
+		
+
 		add(chronometre,BorderLayout.NORTH);
 		
 	    this.setPreferredSize(new Dimension(700,700));

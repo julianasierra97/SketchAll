@@ -1,16 +1,13 @@
-package editeur;
+package main;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
+
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -23,11 +20,9 @@ public class ChatPane extends JPanel implements KeyListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String ENVOYER = "envoyer";
 
 	private ArrayList<String> messages;
-	
-	private JButton buttonEnvoyer;
+
 	
 	private JTextArea messageDisplay;
 	
@@ -75,6 +70,25 @@ public class ChatPane extends JPanel implements KeyListener{
 		
 		
 	}
+	
+	
+	public void recevoirMessage(String message) {
+		boolean alreadyDisplayed=false;
+		for (String string : messages) {
+			if(message.equals(string)) {
+				alreadyDisplayed=true;
+			}
+		}
+		if(!alreadyDisplayed) {
+			messages.add(message);
+			String text= "";
+			for (String string : messages) {
+				text+=string+"\n";
+			}
+			
+			messageDisplay.setText(text);
+		}
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -84,11 +98,11 @@ public class ChatPane extends JPanel implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("entro");
+
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_ENTER) {
 			messages.add(textToSend.getText());
-System.out.println("entro");
+
 			String text= "";
 			for (String string : messages) {
 				text+=string+"\n";
@@ -104,7 +118,7 @@ System.out.println("entro");
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 	
