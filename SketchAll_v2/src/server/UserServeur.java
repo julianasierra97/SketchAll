@@ -42,6 +42,7 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			this.sketcher = sketcher;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put("sketcher", sketcher);
+			hm.put ("name", this.username);
 			// envoi des mises à jour à tous les clients, via la liste des émetteurs
 			for (EmetteurUnicast sender : emetteurs) {
 				sender.diffuseMessage ("Sketcher", getUsername (), hm) ;
@@ -52,13 +53,14 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			this.points = points;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put("points", points);
+			hm.put ("name", this.username);
 			// envoi des mises à jour à tous les clients, via la liste des émetteurs
 			for (EmetteurUnicast sender : emetteurs) {
 				sender.diffuseMessage ("Points", getUsername (), hm) ;
 			}
 		}
 
-		public boolean isSketcher() {
+		public boolean isSketcher() throws RemoteException{
 			return sketcher;
 		}
 

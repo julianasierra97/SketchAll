@@ -88,6 +88,12 @@ public class RecepteurUnicast extends Thread implements Runnable {
 			}else if (command.equals ("Send message")) {
 				// diffusion message
 				localClient.getChatPane().receiveMessage(name, (String)hm.get("message"));
+			}else if (command.equals ("Sketcher")) {
+				// diffusion message
+				localClient.setPlayerSketcher(name, (boolean)hm.get("sketcher"));
+			}else if (command.equals ("Points")) {
+				// diffusion message
+				localClient.setPlayerPoints(name, (int)hm.get("points"));
 			}
 			
 		}

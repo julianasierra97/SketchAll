@@ -76,7 +76,7 @@ public class ChatPane extends JPanel implements KeyListener{
 	}
 	
 	
-	public void receiveMessage(String username, String message) {
+	public synchronized void receiveMessage(String username, String message) {
 			
 			messages.add(username+ ": "+message);
 			String text= "";
@@ -87,7 +87,7 @@ public class ChatPane extends JPanel implements KeyListener{
 			messageDisplay.setText(text);
 	}
 	
-	public void sendMessage(String message) {
+	public synchronized void sendMessage(String message) {
 		try {
 			this.frame.getServer().sendMessage(this.frame.getUsername(),message);
 		} catch (RemoteException e) {

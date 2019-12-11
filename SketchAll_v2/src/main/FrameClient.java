@@ -158,6 +158,14 @@ private static final long serialVersionUID = 1L ;
 			System.out.println(players);
 			
 		}
+		
+		public synchronized void setPlayerSketcher(String username, boolean sketcher) {
+			players.get(username).setSketcher(sketcher);
+		}
+		
+		public synchronized void setPlayerPoints(String username, int points) {
+			players.get(username).setPoints(points);
+		}
 
 		public HashMap<String, Player> getPlayers() {
 			return players;

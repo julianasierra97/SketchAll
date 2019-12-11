@@ -9,6 +9,6 @@ public interface RemoteUserServeur extends Remote {
 	public void setPoints(int points) throws RemoteException;
 	public String getUsername() throws RemoteException ;
 	public int getPoints() throws RemoteException ;
-	public boolean isSketcher();
+	public boolean isSketcher() throws RemoteException;
 
 }
