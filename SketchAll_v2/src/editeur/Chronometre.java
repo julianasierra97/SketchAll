@@ -2,9 +2,7 @@ package editeur;
 
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

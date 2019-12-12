@@ -13,7 +13,6 @@ import java.util.HashMap ;
 import javax.swing.JPanel;
 
 import drawing.DessinClient;
-import main.ChatPane;
 import main.FrameClient;
 import server.RemoteDessinServeur ;
 

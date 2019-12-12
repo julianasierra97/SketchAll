@@ -116,7 +116,7 @@ private static final long serialVersionUID = 1L ;
 			// ajout du joueur dans la liste serveur
 			try {
 				if (! server.getPlayerList().containsKey (this.username)) {
-					RemoteUserServeur proxy = server.addPlayer(this.username);
+					server.addPlayer(this.username);
 				}
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block

@@ -3,10 +3,15 @@ package main;
 
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class LoginFrame extends JFrame {
 
@@ -21,9 +27,6 @@ public class LoginFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JPanel panel;
-	JLabel user_label; 
-	JLabel password_label;
 	JLabel message;
 	JTextField username_text;
 	JPasswordField password_text;
@@ -41,31 +44,47 @@ public class LoginFrame extends JFrame {
 		this.serverMachineName=serverMachineName;
 		this.serverRMIPort=serverRMIPort;
 		
-		user_label = new JLabel();
+		JLabel user_label = new JLabel();
+		user_label.setFont(new Font("Arial",Font.PLAIN, 40));
 	    user_label.setText("User Name :");
 	    username_text = new JTextField();
-	    password_label = new JLabel();
+	    username_text.setFont(new Font("Arial",Font.PLAIN, 40));
+	    JLabel password_label = new JLabel();
+	    password_label.setFont(new Font("Arial",Font.PLAIN, 40));
 	    password_label.setText("Password :");
 	    password_text = new JPasswordField();
+	    password_text.setFont(new Font("Arial",Font.PLAIN, 40));
 	    
-	    submit = new JButton("SUBMIT");
+	    JButton submit = new JButton("SUBMIT");
+	    submit.setPreferredSize(new Dimension(200, 100));
+	    submit.setFont(new Font("Arial",Font.PLAIN, 40));
+	    submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-	    panel = new JPanel(new GridLayout(3, 1));
-	    panel.add(user_label);
-	    panel.add(username_text);
-	    panel.add(password_label);
-	    panel.add(password_text);
-	    message = new JLabel();
-	    panel.add(message);
-	    panel.add(submit);
+	    JPanel userpanel = new JPanel(new GridLayout(1,2,10,20));
+	    userpanel.setPreferredSize(new Dimension(500, 60));
+	    JPanel passwordpanel = new JPanel(new GridLayout(1,2,10,20));
+	    passwordpanel.setPreferredSize(new Dimension(500, 60));
+	    userpanel.add(user_label);
+	    userpanel.add(username_text);
+	    passwordpanel.add(password_label);
+	    passwordpanel.add(password_text);
 
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	      // Adding the listeners to components..
 	    submit.addActionListener(new LoginListener(this));
-	    add(panel, BorderLayout.CENTER);
+	    JPanel loginPane = new JPanel();
+	    loginPane.setLayout(new BoxLayout(loginPane, BoxLayout.PAGE_AXIS));
+	    loginPane.setBorder(new EmptyBorder(20,20,20,20));
+	    loginPane.add(userpanel);
+	    loginPane.add(Box.createRigidArea(new Dimension(0, 20)));
+	    loginPane.add(passwordpanel);
+	    loginPane.add(Box.createRigidArea(new Dimension(0, 20)));
+	    loginPane.add(submit);
 	    setTitle("Login Here !");
-	    setSize(250,150);
+	    setLocationRelativeTo(null);
+	    setSize(800,500);
+	    add(loginPane);
 	    setVisible(true);
 	 
 	}

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.rmi.RemoteException;
 
-import javax.swing.JPanel;
 
 import editeur.ZoneDeDessin;
 
