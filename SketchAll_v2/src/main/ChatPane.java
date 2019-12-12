@@ -8,55 +8,50 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ChatPane extends JPanel implements KeyListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	private ArrayList<String> messages;
-
 	private JTextArea messageDisplay;
-
 	private JTextField textToSend;
-
+	private String currentWord;
+	private JLabel wordLabel;
 	private JPanel panelSouth;
-
 	private FrameClient frame;
 
 	public ChatPane(FrameClient frame) {
 
 		this.frame = frame;
 
-		setSize(200, 400);
-
+		setSize(200, 400);		
+		setBorder(BorderFactory.createTitledBorder("Tchat"));
+		setLayout(new BorderLayout());
+		setPreferredSize(new Dimension(200, 200));
+		
 		messages = new ArrayList<>();
 
 		messageDisplay = new JTextArea();
 		messageDisplay.setEditable(false);
 
-		textToSend = new JTextField();
-		textToSend.addKeyListener(this);
-		setBorder(BorderFactory.createTitledBorder("Chat"));
-
-		setLayout(new BorderLayout());
-
-		setPreferredSize(new Dimension(200, 200));
+		currentWord = frame.nextWord();
 
 		panelSouth = new JPanel();
 		panelSouth.setLayout(new BorderLayout());
-
+		System.out.println(frame.getPlayer().isSketcher());
 		if (!frame.getPlayer().isSketcher()) {
+			textToSend = new JTextField();
+			textToSend.addKeyListener(this);
 			panelSouth.add(textToSend, BorderLayout.CENTER);
 		} else {
-			System.out.println("A word has to be displayed !");
+			wordLabel = new JLabel(currentWord);
+			panelSouth.add(wordLabel, BorderLayout.CENTER);
 		}
+		System.out.println(currentWord);
 
 		add(panelSouth, BorderLayout.SOUTH);
 
@@ -70,7 +65,7 @@ public class ChatPane extends JPanel implements KeyListener {
 
 	public synchronized void receiveMessage(String username, String message) {
 
-		messages.add(username + ": " + message);
+		messages.add(username + " : " + message);
 		String text = "";
 		for (String string : messages) {
 			text += string + "\n";
@@ -82,6 +77,12 @@ public class ChatPane extends JPanel implements KeyListener {
 	public synchronized void sendMessage(String message) {
 		try {
 			this.frame.getServer().sendMessage(this.frame.getUsername(), message);
+			//On ne tient pas compte de la casse ni des espaces
+			if (message.toLowerCase().trim().contains(currentWord.toLowerCase().trim())) {
+				System.out.println("YOU WON !!!!!!!!!!!!");
+				frame.setGuesserPoints(10);
+				frame.setSketcherPoints(5);
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

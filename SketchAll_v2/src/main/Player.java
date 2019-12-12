@@ -22,7 +22,7 @@ public class Player {
 		this.proxy = proxy;
 		
 		
-		this.sketcher = true;
+		//this.sketcher = true;
 	}
 
 	public int getPoints() {

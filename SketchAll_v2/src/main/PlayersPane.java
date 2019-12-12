@@ -13,9 +13,6 @@ import javax.swing.border.EmptyBorder;
 
 public class PlayersPane extends JPanel{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private HashMap<String,PlayerPane> playersList;
@@ -43,9 +40,7 @@ public class PlayersPane extends JPanel{
 	}
 	
 	private class PlayerPane extends JPanel{
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
 		
 		private JTextArea playerName;

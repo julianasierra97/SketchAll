@@ -7,6 +7,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 
@@ -39,16 +40,13 @@ public class FrameClient extends JFrame {
 	// - sinon on met directement l'adresse IP du serveur dans cette chaine de
 	// caract�re
 	protected String serverMachineName;
-
 	private EditeurClient editeur;
-
 	private String username;
-
 	private HashMap<String, Player> players;
-
 	private ChatPane chatPane;
-
 	private PlayersPane playersPane;
+	private ArrayList<String> words;
+	private int round;
 
 	// Constructeur à qui on transmet les informations suivantes :
 	// - nom de l'�diteur
@@ -61,6 +59,7 @@ public class FrameClient extends JFrame {
 		this.username = username;
 		players = new HashMap<String, Player>();
 		playersPane = new PlayersPane();
+		selectWords();
 		try {
 			// tentative de connexion au serveur distant
 			server = (RemoteEditeurServeur) Naming
@@ -200,5 +199,40 @@ public class FrameClient extends JFrame {
 
 	public void setChatPane(ChatPane chatPane) {
 		this.chatPane = chatPane;
+	}
+	
+	public void setGuesserPoints(int points) {
+		int score = getPlayer().getPoints();
+		score += points;
+		getPlayer().setPoints(score);
+		playersPane.setPoints(getPlayer().getUsername(), score);
+	}
+	
+	public void setSketcherPoints(int points) {
+		for(Map.Entry<String, Player> entry : players.entrySet()) {
+		    //String key = entry.getKey();
+		    Player player = entry.getValue();
+		    if (player.isSketcher()) {
+		    	int score = player.getPoints();
+				score += points;
+				player.setPoints(score);
+				playersPane.setPoints(player.getUsername(), score);
+		    }
+		}
+	}
+	
+	public void selectWords() {
+		RandomWords randomWords = new RandomWords();
+		words = randomWords.selectWords();
+	}
+	
+	public String nextWord() {
+		String nextWord;
+		if (round < words.size()) {
+			nextWord = words.get(round);
+		} else {
+			nextWord = null;
+		}
+		return nextWord;
 	}
 }
