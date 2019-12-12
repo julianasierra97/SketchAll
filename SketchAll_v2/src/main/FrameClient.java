@@ -134,7 +134,7 @@ public class FrameClient extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.editeur = new EditeurClient(this);
 		this.getContentPane().add(editeur, BorderLayout.CENTER);
-		this.setTitle("Paint");
+		this.setTitle("SketchAll");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chatPane = new ChatPane(this);
@@ -149,6 +149,7 @@ public class FrameClient extends JFrame {
 	public synchronized void addPlayer(String username) {
 		if (!players.containsKey(username)) {
 			try {
+				System.out.println("nbr of players : " + players.size());
 				this.addPlayer(username, server.getPlayer(username));
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block

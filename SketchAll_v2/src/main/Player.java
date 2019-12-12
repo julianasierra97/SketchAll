@@ -1,11 +1,14 @@
 package main;
 
+import java.util.Random;
+
 import server.RemoteUserServeur;
 
 public class Player {
 
 	private String username;
 	private int points;
+	private Random random = new Random();
 	private boolean sketcher;
 	private RemoteUserServeur proxy;
 
@@ -13,7 +16,8 @@ public class Player {
 		super();
 		this.username = username;
 		this.points = 0;
-		this.sketcher = false;
+		this.sketcher = random.nextBoolean();
+		System.out.println(random.nextBoolean());
 		this.proxy = proxy;
 	}
 
