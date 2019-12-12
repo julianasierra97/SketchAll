@@ -4,57 +4,55 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
 public class RandomWords {
 
-	private Random randomPlace;
-	private int pos;
-	private String word;
+	private Random random = new Random();
+	private int randomInt;
+	ArrayList<String> words;
+	private String randomWord;
 	Properties prop = new Properties();
-	private String wordPlace;
+	private String randomPlace;
 	public final static int NUMBEROFWORDS = 155;
 
 	public RandomWords() {
 
 	}
 
-	public String showWord() {
-		randomPlace = new Random();
+	public ArrayList<String> selectWords() {
+		words = new ArrayList<String>();
 
-		pos = randomPlace.nextInt(NUMBEROFWORDS - 1);
+		for (int i = 0; i < 5; i++) {
+			randomInt = random.nextInt(NUMBEROFWORDS - 1);
+			randomPlace = Integer.toString(randomInt);
 
-		wordPlace = Integer.toString(pos);
+			try (InputStream input = new FileInputStream("../SketchAll_v2/src/main/words.properties")) {
+				prop.load(input);
+				randomWord = prop.getProperty(randomPlace);
+				//On s'assure que le mot existe bien (indice 0) et n'est pas déjà dans la liste
+				if (words.contains(randomWord) || randomWord == null) {	
+					System.out.println("oups");
+					i--;
+				} else {
+					words.add(randomWord);	
+				}
 
-		try (InputStream input = new FileInputStream("../SketchAll_v2/src/main/words.properties")) {
-			// System.out.println("input" + input);
-			prop.load(input);
-
-			word = prop.getProperty(wordPlace);
-
-			return word;
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
+		return words;
+
 	}
 
 	public static void main(String[] args) {
-		RandomWords rand = new RandomWords();
-		String word;
-//		for (int i = 0; i < 10; i++) {
-//
-//			word = rand.showWord();
-//			System.out.println(word);
-//		}
-		word = rand.showWord();
-		System.out.println(word);
+		System.out.println(new RandomWords().selectWords());
 	}
 }
