@@ -1,7 +1,5 @@
 package main;
 
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,32 +9,27 @@ import java.util.Random;
 
 public class RandomWords {
 
-
 	private Random randomPlace;
 	private int pos;
 	private String word;
 	Properties prop = new Properties();
 	private String wordPlace;
-public final static int NUMBEROFWORDS = 155; 
+	public final static int NUMBEROFWORDS = 155;
 
-	public RandomWords() 
-	{
-		
-		
-		
+	public RandomWords() {
+
 	}
 
-	public String showWord()
-	{
+	public String showWord() {
 		randomPlace = new Random();
-		
-		pos = randomPlace.nextInt(NUMBEROFWORDS-1);
-		
-		wordPlace= Integer.toString(pos);
 
-		try (InputStream input= new FileInputStream("words.properties")) {
-			// System.out.println("input" + input); 
-			prop.load(input); 
+		pos = randomPlace.nextInt(NUMBEROFWORDS - 1);
+
+		wordPlace = Integer.toString(pos);
+
+		try (InputStream input = new FileInputStream("../SketchAll_v2/src/main/words.properties")) {
+			// System.out.println("input" + input);
+			prop.load(input);
 
 			word = prop.getProperty(wordPlace);
 
@@ -52,13 +45,16 @@ public final static int NUMBEROFWORDS = 155;
 			return null;
 		}
 	}
-	public static void main(String[] args) {
-		RandomWords rand=new RandomWords();
-		 String   word;
-		for(int i =0; i<10; i++) {
 
-	  word = rand.showWord();
-	  System.out.println(word);
-		}
+	public static void main(String[] args) {
+		RandomWords rand = new RandomWords();
+		String word;
+//		for (int i = 0; i < 10; i++) {
+//
+//			word = rand.showWord();
+//			System.out.println(word);
+//		}
+		word = rand.showWord();
+		System.out.println(word);
 	}
 }
