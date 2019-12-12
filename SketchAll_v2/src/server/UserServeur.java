@@ -26,11 +26,11 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 		public UserServeur (String username, List<EmetteurUnicast> senders) throws RemoteException {
 			this.emetteurs = senders ;
 			this.username = username ;
-			this.sketcher = false;
+			this.sketcher = true;
 			this.points = 0;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put ("points", new Integer (0)) ;
-			hm.put ("sketcher", false) ;
+			hm.put ("sketcher", sketcher) ;
 			hm.put ("name", username) ;
 			// envoi des mises à jour à tous les clients, via la liste des émetteurs
 			for (EmetteurUnicast sender : senders) {

@@ -27,7 +27,7 @@ public class Rectangle extends DessinClient {
 	public void paint (Graphics graph) {
 		super.paint (graph) ;
 		//graph.drawRect(0,0,getWidth()-1,getHeight()-1);
-		graph.fillRect(0,0,getWidth(),getHeight());
+		graph.fillRect(2,2,getWidth()-5,getHeight()-5);
 	}
 	
 }

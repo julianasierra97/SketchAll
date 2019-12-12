@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import editeur.ZoneDeDessin;
 import listener.ModificationListener;
@@ -12,59 +14,81 @@ import server.RemoteDessinServeur;
 
 public abstract class DessinClient extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L ;
 
-	ModificationListener ML;
-	RemoteDessinServeur proxy;
-	ZoneDeDessin sheet;
+	   ModificationListener ML ;
+	   RemoteDessinServeur proxy ;
+	   ZoneDeDessin sheet;
+	   boolean selection;
+	   
 
-	// constructeur Dessin : paramÃ©trÃ© par une instance de RemoteDessin permettant
-	// d'envoyer des informations au rÃ©fÃ©rent sur le serveur
-	public DessinClient(ZoneDeDessin sheet, RemoteDessinServeur proxy) {
-		this.sheet = sheet;
-		this.proxy = proxy;
+	   // constructeur Dessin : paramétré par une instance de RemoteDessin permettant d'envoyer des informations au référent sur le serveur 
+	   public DessinClient (ZoneDeDessin sheet, RemoteDessinServeur proxy) {
+		   this.sheet = sheet;
+		   this.proxy = proxy ;
+		   
+		   setForeground(sheet.getForeground());
+		   setOpaque (false) ;
+		   ML = new ModificationListener (this);
+		   addMouseListener (ML) ;
+		   addMouseMotionListener (ML) ;
+		   this.select(false);
+	   }
+	   
+	   public void setProxyColor (Color color) {
+		   setForeground (color) ;
+	   }
+	   
+	   // méthode permettant de "retailler" un Dessin :
+	   // - elle réalise un "setBounds" pour fournir un retour visuel immédiat)
+	   // - ensuite elle propage le changement au référent, vie une remote invocation sur le proxy  
+	   public void setProxyBounds (int x, int y, int w, int h) {
+		   setBounds (x, y, w, h) ;
+		   try {
+			   proxy.setBounds (x, y, w, h) ;
+		   } catch (RemoteException e) {
+			   e.printStackTrace();
+		   }
+	   }
 
-		setForeground(sheet.getForeground());
-		setOpaque(false);
-		ML = new ModificationListener(this);
-		if (sheet.getEditor().isSketcher()) {
-			addMouseListener(ML);
-			addMouseMotionListener(ML);
+	   // méthode permettant de déplacer un Dessin :
+	   // - elle réalise un "setLocation" pour fournir un retour visuel immédiat
+	   // - ensuite elle propage le changement au référent, vie une remote invocation sur le proxy  
+	   public void setProxyLocation (int x, int y) {
+		   setLocation (x, y) ;
+		   try {
+			   proxy.setLocation (x, y) ;
+		   } catch (RemoteException e) {
+			   e.printStackTrace();
+		   }
+	   }
+	   
+	   public void paint (Graphics graph) {
+			super.paint (graph) ;
 		}
+	   
+	   public void select(boolean selection) {
+		   if (!selection) {
+			   for ( DessinClient d : this.sheet.getEditor().getDrawings().values()) {
+				   d.setSelection(false);
+				   d.setBorder(new EmptyBorder(0,0,0,0));
+			   }
+			   this.selection=true;
+			   this.setBorder(new LineBorder(Color.black,1));
+		   }
+		   else {
+			   this.selection=false;
+			   this.setBorder(new EmptyBorder(0,0,0,0));
+		   }
+		   
+	   }
+
+	public boolean isSelection() {
+		return selection;
 	}
 
-	public void setProxyColor(Color color) {
-		setForeground(color);
+	public void setSelection(boolean selection) {
+		this.selection = selection;
 	}
-
-	// mÃ©thode permettant de "retailler" un Dessin :
-	// - elle rÃ©alise un "setBounds" pour fournir un retour visuel immÃ©diat)
-	// - ensuite elle propage le changement au rÃ©fÃ©rent, vie une remote invocation
-	// sur le proxy
-	public void setProxyBounds(int x, int y, int w, int h) {
-		setBounds(x, y, w, h);
-		try {
-			proxy.setBounds(x, y, w, h);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// mÃ©thode permettant de dÃ©placer un Dessin :
-	// - elle rÃ©alise un "setLocation" pour fournir un retour visuel immÃ©diat
-	// - ensuite elle propage le changement au rÃ©fÃ©rent, vie une remote invocation
-	// sur le proxy
-	public void setProxyLocation(int x, int y) {
-		setLocation(x, y);
-		try {
-			proxy.setLocation(x, y);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void paint(Graphics graph) {
-		super.paint(graph);
-	}
-
+	   
 }

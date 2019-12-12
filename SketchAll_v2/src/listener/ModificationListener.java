@@ -20,10 +20,13 @@ public class ModificationListener implements MouseListener, MouseMotionListener 
    }
 
    public void mouseClicked (MouseEvent e) {
+	   drawing.select(drawing.isSelection());
    }
 
    public void mouseEntered (MouseEvent e) {
-		drawing.setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR)) ;
+	   if (drawing.isSelection()) {
+		   drawing.setCursor (Cursor.getPredefinedCursor (Cursor.MOVE_CURSOR)) ;
+	   }
    }
 
    public void mouseExited (MouseEvent e) {
@@ -31,14 +34,18 @@ public class ModificationListener implements MouseListener, MouseMotionListener 
    }
 
    public void mousePressed (MouseEvent e) {
-      offset = e.getPoint () ;
+	   if (drawing.isSelection()) {
+		   offset = e.getPoint () ;
+	   }
    }
 
    public void mouseReleased (MouseEvent e) {
    }
 
    public void mouseDragged (MouseEvent e) {
-      drawing.setProxyLocation (drawing.getX () + e.getX () - offset.x, drawing.getY () + e.getY () - offset.y) ;
+	   if (drawing.isSelection()) {
+		   drawing.setProxyLocation (drawing.getX () + e.getX () - offset.x, drawing.getY () + e.getY () - offset.y) ;
+	   }
    }
 
    public void mouseMoved (MouseEvent e) {

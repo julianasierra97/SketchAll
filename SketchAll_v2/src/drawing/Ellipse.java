@@ -27,7 +27,7 @@ public class Ellipse extends DessinClient {
 	
 	public void paint (Graphics graph) {
 		super.paint (graph) ;
-		graph.fillOval(0,0,getWidth(),getHeight()) ;
+		graph.fillOval(2,2,getWidth()-5,getHeight()-5) ;
 	}
 	
 	public boolean contains (int x, int y) {

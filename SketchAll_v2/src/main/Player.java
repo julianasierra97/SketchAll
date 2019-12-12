@@ -16,9 +16,13 @@ public class Player {
 		super();
 		this.username = username;
 		this.points = 0;
+		
 		this.sketcher = random.nextBoolean();
 		System.out.println(random.nextBoolean());
 		this.proxy = proxy;
+		
+		
+		this.sketcher = true;
 	}
 
 	public int getPoints() {

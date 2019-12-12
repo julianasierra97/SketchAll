@@ -226,6 +226,10 @@ public class EditeurClient extends JPanel {
 
 	}
 
+	public HashMap<String, DessinClient> getDrawings() {
+		return drawings;
+	}
+
 	public FrameClient getFrame() {
 		return frame;
 	}
