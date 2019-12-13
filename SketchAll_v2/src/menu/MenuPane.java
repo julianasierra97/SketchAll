@@ -28,7 +28,7 @@ public class MenuPane extends JPanel {
 			upperBar = new UpperBar ();
 			add(upperBar, BorderLayout.NORTH);
 
-			sideBar = new SideBar ();
+			sideBar = new SideBar (frame);
 			add(sideBar, BorderLayout.EAST);
 	}
 

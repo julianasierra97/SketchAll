@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.Naming;
@@ -10,9 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import communication.RecepteurUnicast;
 import editeur.EditeurClient;
+import menu.MenuPane;
 import server.RemoteEditeurServeur;
 import server.RemoteUserServeur;
 
@@ -43,7 +48,11 @@ public class FrameClient extends JFrame {
 	private ChatPane chatPane;
 	private PlayersPane playersPane;
 	private ArrayList<String> words;
+	private JPanel mainViewPane;
+	private JPanel containerPane;
+	private MenuPane menuPane;
 	private int round;
+	private CardLayout cl;
 
 	// Constructeur à qui on transmet les informations suivantes :
 	// - nom de l'�diteur
@@ -114,17 +123,38 @@ public class FrameClient extends JFrame {
 		// - faite "seulement"/"tardivement" ici pour que tous les objets r�cup�r�s du
 		// serveur apparaissent bien du premier coup
 
-		this.setSize(1500, 1000);
+		this.setSize(1000, 600);
+		
 		this.setLayout(new BorderLayout());
+		
+		mainViewPane = new JPanel();
+		
+		cl= new CardLayout();
+	
+		
+		
+		mainViewPane.setLayout(new BorderLayout());
 		this.editeur = new EditeurClient(this);
-		this.getContentPane().add(editeur, BorderLayout.CENTER);
+		mainViewPane.add(editeur, BorderLayout.CENTER);
 		this.setTitle("SketchAll");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chatPane = new ChatPane(this);
-		this.getContentPane().add(chatPane, BorderLayout.EAST);
+		mainViewPane.add(chatPane, BorderLayout.EAST);
 
-		this.getContentPane().add(playersPane, BorderLayout.WEST);
+		mainViewPane.add(playersPane, BorderLayout.WEST);
+		
+		menuPane= new MenuPane(this);
+		
+		containerPane= new JPanel();
+		containerPane.setLayout(cl);
+		containerPane.add(menuPane,"1");
+		containerPane.add(mainViewPane,"2");
+		this.add(containerPane,BorderLayout.CENTER);
+	
+		
+		
+		cl.show(containerPane, "1");
 
 		setVisible(true);
 
@@ -206,6 +236,13 @@ public class FrameClient extends JFrame {
 		}
 	}
 	
+	public CardLayout getCardLayout() {
+		return cl;
+	}
+	
+	public JPanel getContainerPane() {
+		return containerPane;
+	}
 	public void selectWords() {
 		RandomWords randomWords = new RandomWords();
 		words = randomWords.selectWords();

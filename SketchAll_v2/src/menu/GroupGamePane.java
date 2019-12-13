@@ -6,7 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import main.FrameClient;
 public class GroupGamePane extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +28,9 @@ public class GroupGamePane extends JPanel {
 	
 	OptionButton playButton = new OptionButton("Play with friends");
 	
-	public GroupGamePane(SideBar pane) {
+	private FrameClient fc;
+	
+	public GroupGamePane(SideBar pane, FrameClient fc) {
 		this.pane = pane;
 		
 		setLayout(new GridBagLayout());
@@ -43,6 +47,8 @@ public class GroupGamePane extends JPanel {
 		border.setTitleJustification(TitledBorder.LEFT);
 		border.setTitleColor(borderColor);
 		setBorder(border);
+		
+		this.fc=fc;
 		
 	    gbc = new GridBagConstraints();
 	    gbc.gridx = 0;
@@ -77,7 +83,21 @@ public class GroupGamePane extends JPanel {
 	        gbc.gridy++;
 		}
         playButton.setFont(new Font("Comic Sans MS",1,13));
-        add(playButton, gbc);   
+        playButton.addActionListener(new menuListener());
+        add(playButton, gbc); 
+      
+	}
+	
+	private class menuListener implements ActionListener{
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			fc.setSize(1300, 900);
+			fc.getCardLayout().show(fc.getContainerPane(), "2");
+			
+		}
+		
 	}
 	
 }
