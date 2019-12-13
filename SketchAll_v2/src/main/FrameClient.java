@@ -32,14 +32,11 @@ public class FrameClient extends JFrame {
 	// le nom de la machine qui h�berge l'�diteur local
 	protected String clientMachineName;
 
-	// le port rmi sur lequel est d�clar� le serveur distant
-	protected int RMIPort;
 
 	// le nom de la machine sur laquelle se trouve le serveur distant :
 	// - le syst�me saura calculer l'adresse IP de la machine à partir de son nom
 	// - sinon on met directement l'adresse IP du serveur dans cette chaine de
 	// caract�re
-	protected String serverMachineName;
 	private EditeurClient editeur;
 	private String username;
 	private HashMap<String, Player> players;
@@ -53,25 +50,13 @@ public class FrameClient extends JFrame {
 	// - nom du serveur distant
 	// - nom de la machine sur laquelle se trouve le serveur
 	// - num�ro de port sur lequel est d�clar� le serveur sur la machine distante
-	FrameClient(final String clientMachineName, final String serverEditorName, final String serverMachineName,
-			final int serverRMIPort, final String username) {
+	FrameClient(final String clientMachineName, final String username, RemoteEditeurServeur server) {
 		this.clientMachineName = clientMachineName;
 		this.username = username;
 		players = new HashMap<String, Player>();
 		playersPane = new PlayersPane();
 		selectWords();
-		try {
-			// tentative de connexion au serveur distant
-			server = (RemoteEditeurServeur) Naming
-					.lookup("//" + serverMachineName + ":" + serverRMIPort + "/" + serverEditorName);
-			// invocation d'une premi�re m�thode juste pour test
-			server.answer("hello from " + getName());
-
-		} catch (Exception e) {
-			System.out.println("probleme liaison CentralManager");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		this.server=server;
 		try {
 			// cr�ation d'un r�cepteur unicast en demandant l'information de num�ro port au
 			// serveur

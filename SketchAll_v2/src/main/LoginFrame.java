@@ -139,6 +139,6 @@ public class LoginFrame extends JFrame {
 	}
 
 	public FrameClient createClient(String username) {
-		return new FrameClient(clientMachineName, serverEditorName, serverMachineName, serverRMIPort, username);
+		return new FrameClient(clientMachineName,  username, server);
 	}
 }
