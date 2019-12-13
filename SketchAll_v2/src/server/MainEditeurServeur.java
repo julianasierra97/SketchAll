@@ -1,6 +1,7 @@
 package server;
 import java.rmi.RemoteException ;
 import java.rmi.registry.LocateRegistry ;
+import java.util.HashMap;
 
 public class MainEditeurServeur {
 
@@ -20,10 +21,20 @@ public class MainEditeurServeur {
 		try {
 			// création d'un registre rmi sur le port rmi choisi, indispensable pour pouvoir attacher ensuite un serveur 
 			LocateRegistry.createRegistry (portRMI) ;
-			new EditeurServeur (nomServeur, nomMachineRMI, portRMI, portEmissionUpdates) ;
+			new EditeurServeur (nomServeur, nomMachineRMI, portRMI, portEmissionUpdates, initLogin()) ;
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static HashMap<String,String> initLogin() {
+		HashMap<String,String> loginList = new HashMap<String,String>();
+		loginList.put("works","works");
+		loginList.put("user1","ok1");
+		loginList.put("user2","ok2");
+		loginList.put("Stan","cookie");
+		
+		return loginList;
 	}
 
 }

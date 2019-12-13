@@ -24,13 +24,10 @@ public class ZoneDeDessin extends JPanel {
 
 	public ZoneDeDessin(EditeurClient editor) {
 		this.editor = editor;
-
-		if (editor.isSketcher()) {
-			CreationListener CL = new CreationListener(editor, this);
-			addMouseListener(CL);
-			addMouseMotionListener(CL);
-			setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		}
+		CreationListener CL = new CreationListener(editor, this);
+		addMouseListener(CL);
+		addMouseMotionListener(CL);
+		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		setPreferredSize(new Dimension(900, 600));
 		setRadius(radius);
 		setForeground(Color.black);

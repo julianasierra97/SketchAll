@@ -41,14 +41,17 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	
 	// liste des joueurs
 	private HashMap<String, RemoteUserServeur> playerList = new HashMap<String, RemoteUserServeur> () ;
+	
+	private HashMap<String,String> loginList;
 
 	// le constructeur du serveur : il le déclare sur un port rmi de la machine d'exécution
-	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate) throws RemoteException {
+	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate, HashMap<String,String> loginList) throws RemoteException {
 		this.nomServeur = nomServeur ;
 		this.nomMachineServeur = nomMachineServeur ;
 		this.portRMI = portRMIServeur ;
 		this.portEmission = portEmissionUpdate ;
 		transmitters = new ArrayList<EmetteurUnicast> () ;
+		this.loginList=loginList;
 		try {
 			// attachcement sur serveur sur un port identifié de la machine d'exécution
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMIServeur + "/" + nomServeur, this) ;
@@ -175,6 +178,10 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		for (EmetteurUnicast sender : transmitters) {
 			sender.diffuseMessage ("Send message", username, hm) ;
 		}
+	}
+	
+	public boolean loginCorrect(String username, String password) throws RemoteException{
+		return loginList.get(username).equals(password);
 	}
 
 }

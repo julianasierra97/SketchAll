@@ -48,6 +48,7 @@ public class CreationListener implements MouseListener, MouseMotionListener {
 		// mise à jour des limites du dessin courant, ne sert pas à grand chose puisque w et h valent 0
 		((DessinClient) shapeToCreate).setProxyBounds (debut.x, debut.y, 0, 0) ;
 		((DessinClient) shapeToCreate).setProxyColor (color) ;
+		((DessinClient) shapeToCreate).select(false);
 	}
 
 	@Override

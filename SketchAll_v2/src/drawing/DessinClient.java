@@ -32,7 +32,7 @@ public abstract class DessinClient extends JPanel {
 		   ML = new ModificationListener (this);
 		   addMouseListener (ML) ;
 		   addMouseMotionListener (ML) ;
-		   this.select(false);
+		   this.select(true);
 	   }
 	   
 	   public void setProxyColor (Color color) {

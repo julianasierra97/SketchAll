@@ -4,8 +4,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +22,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import server.RemoteEditeurServeur;
+
 public class LoginFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -26,6 +32,7 @@ public class LoginFrame extends JFrame {
 	JPasswordField password_text;
 	JButton submit, cancel;
 	Login logDoc;
+	RemoteEditeurServeur server;
 	final String clientMachineName;
 	final String serverEditorName;
 	final String serverMachineName;
@@ -38,6 +45,20 @@ public class LoginFrame extends JFrame {
 		this.serverEditorName = serverEditorName;
 		this.serverMachineName = serverMachineName;
 		this.serverRMIPort = serverRMIPort;
+		this.logDoc = new Login();
+		
+		try {
+			// tentative de connexion au serveur distant
+			server = (RemoteEditeurServeur) Naming
+					.lookup("//" + serverMachineName + ":" + serverRMIPort + "/" + serverEditorName);
+			// invocation d'une premi�re m�thode juste pour test
+			server.answer("hello from " + getName());
+
+		} catch (Exception e) {
+			System.out.println("probleme liaison CentralManager");
+			e.printStackTrace();
+			System.exit(1);
+		}
 
 		JLabel user_label = new JLabel();
 		user_label.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -96,17 +117,22 @@ public class LoginFrame extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			String username = username_text.getText();
 			String password = String.valueOf(password_text.getPassword());
-			logDoc = new Login();
 			System.out.println(username);
-			if (logDoc.readFile(username, password)) {
-				dispose();
+			try {
+				if (server.loginCorrect(username, password)) {
+					dispose();
 
-			} else {
-				JOptionPane.showMessageDialog(null, "The username and password are not correct!", "Login Error",
-						JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "The username and password are not correct!", "Login Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (HeadlessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			logDoc.writeFile(username, password);
 			login.createClient(username);
 		}
 
