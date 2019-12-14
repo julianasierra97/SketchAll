@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import drawing.DessinClient;
 import listener.CreationListener;
 
 public class ZoneDeDessin extends JPanel {
@@ -15,6 +16,11 @@ public class ZoneDeDessin extends JPanel {
 	EditeurClient editor;
 	int radius = 4;
 	String shapeOn = "Rectangle";
+	
+	
+	//dessin actuellement selectionné
+	private DessinClient dessinSelect;
+
 
 	// -----------------------------------------------------------------------
 	// le constructeur :
@@ -30,9 +36,17 @@ public class ZoneDeDessin extends JPanel {
 		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		setPreferredSize(new Dimension(900, 600));
 		setRadius(radius);
-		setForeground(Color.black);
+		setForeground(Color.red);
 		setBackground(Color.white);
 		setLayout(null);
+	}
+
+	public DessinClient getDessinSelect() {
+		return dessinSelect;
+	}
+
+	public void setDessinSelect(DessinClient dessinSelect) {
+		this.dessinSelect = dessinSelect;
 	}
 
 	public void setRadius(int radius) {

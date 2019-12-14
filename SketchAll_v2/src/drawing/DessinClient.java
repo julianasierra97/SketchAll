@@ -2,6 +2,7 @@ package drawing;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseMotionListener;
 import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
@@ -9,7 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import editeur.ZoneDeDessin;
+import listener.CreationListener;
 import listener.ModificationListener;
+import listener.SelectionListener;
 import server.RemoteDessinServeur;
 
 public abstract class DessinClient extends JPanel {
@@ -17,6 +20,7 @@ public abstract class DessinClient extends JPanel {
 	private static final long serialVersionUID = 1L ;
 
 	   ModificationListener ML ;
+	   
 	   RemoteDessinServeur proxy ;
 	   ZoneDeDessin sheet;
 	   boolean selection;
@@ -30,12 +34,13 @@ public abstract class DessinClient extends JPanel {
 		   setForeground(sheet.getForeground());
 		   setOpaque (false) ;
 		   ML = new ModificationListener (this);
-		   addMouseListener (ML) ;
-		   addMouseMotionListener (ML) ;
-		   this.select(true);
+		   addMouseMotionListener(ML);
+		   addMouseListener(ML);
+		   setSelection(false);
 	   }
-	   
-	   public void setProxyColor (Color color) {
+	
+
+	public void setProxyColor (Color color) {
 		   setForeground (color) ;
 	   }
 	   
@@ -67,18 +72,21 @@ public abstract class DessinClient extends JPanel {
 			super.paint (graph) ;
 		}
 	   
-	   public void select(boolean selection) {
+	   public void select() {
 		   if (!selection) {
-			   for ( DessinClient d : this.sheet.getEditor().getDrawings().values()) {
-				   d.setSelection(false);
-				   d.setBorder(new EmptyBorder(0,0,0,0));
+			   
+			   DessinClient dSelect = sheet.getDessinSelect();
+			   if (dSelect!=null) {
+			   dSelect.setSelection(false);
 			   }
-			   this.selection=true;
-			   this.setBorder(new LineBorder(Color.black,1));
+			   
+			   this.setSelection(true);
+			   sheet.setDessinSelect(this);
+			   
 		   }
 		   else {
-			   this.selection=false;
-			   this.setBorder(new EmptyBorder(0,0,0,0));
+			   this.setSelection(false);
+			   sheet.setDessinSelect(null);
 		   }
 		   
 	   }
@@ -89,6 +97,17 @@ public abstract class DessinClient extends JPanel {
 
 	public void setSelection(boolean selection) {
 		this.selection = selection;
+		
+		if (this.selection) {
+			this.setBorder(new LineBorder(Color.black,1));	
+		}
+		else {
+			this.setBorder(new EmptyBorder(0,0,0,0));
+			
+		}
 	}
-	   
+      
+	public ZoneDeDessin getSheet() {
+		return sheet;
+	}
 }
