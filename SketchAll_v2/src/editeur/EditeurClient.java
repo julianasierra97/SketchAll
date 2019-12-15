@@ -57,11 +57,11 @@ public class EditeurClient extends JPanel {
 		ZoneDeDessin = new ZoneDeDessin(this);
 		toolPane = new ToolPane(this);
 
-		chronometre = new Chronometre(this);
+	
 		add(ZoneDeDessin, BorderLayout.CENTER);
 		add(toolPane, BorderLayout.SOUTH);
 
-		add(chronometre, BorderLayout.NORTH);
+	
 
 		this.setPreferredSize(new Dimension(700, 700));
 
@@ -79,6 +79,11 @@ public class EditeurClient extends JPanel {
 			System.exit(1);
 		}
 
+	}
+	
+	public void creerChronometre() {
+		chronometre = new Chronometre(this);
+		add(chronometre, BorderLayout.NORTH);
 	}
 
 	// méthode permettant de mettre à jour les limites d'un dessin
@@ -235,7 +240,7 @@ public class EditeurClient extends JPanel {
 	}
 
 	public boolean isSketcher() {
-		boolean isSketcher = getFrame().getPlayer().isSketcher();
+		boolean isSketcher = getFrame().getPlayer(frame.getUsername()).isSketcher();
 		return isSketcher;
 	}
 

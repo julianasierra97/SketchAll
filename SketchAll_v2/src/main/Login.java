@@ -19,14 +19,11 @@ class Login {
 			System.out.println("entro");
 
 			InputStream input = new FileInputStream("../SketchAll_v2/src/main/users.properties");
-			System.out.println("entro");
 			// System.out.println("input" + input);
 			prop.load(input);
 			// System.out.println("USERNAME PROP"+prop.getProperty(userName));
 			// System.out.println("USERNAME pais"+prop.getProperty(pais));
-			// prop.setProperty("userName", "holi");
 
-			System.out.println("entro");
 			System.out.println(prop.getProperty(userName));
 
 			if (prop.getProperty(userName) != null) {

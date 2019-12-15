@@ -54,6 +54,8 @@ public class FrameClient extends JFrame {
 	private int round;
 	private CardLayout cl;
 
+	private WaitingPanel waitingPane;
+
 	// Constructeur à qui on transmet les informations suivantes :
 	// - nom de l'�diteur
 	// - nom du serveur distant
@@ -66,6 +68,8 @@ public class FrameClient extends JFrame {
 		playersPane = new PlayersPane();
 		selectWords();
 		this.server=server;
+		
+		waitingPane= new WaitingPanel(this);
 		try {
 			// cr�ation d'un r�cepteur unicast en demandant l'information de num�ro port au
 			// serveur
@@ -124,36 +128,34 @@ public class FrameClient extends JFrame {
 		// serveur apparaissent bien du premier coup
 
 		this.setSize(1000, 600);
-		
+
 		this.setLayout(new BorderLayout());
-		
-		mainViewPane = new JPanel();
-		
-		cl= new CardLayout();
+
 	
-		
-		
-		mainViewPane.setLayout(new BorderLayout());
-		this.editeur = new EditeurClient(this);
-		mainViewPane.add(editeur, BorderLayout.CENTER);
+
+		cl= new CardLayout();
 		this.setTitle("SketchAll");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chatPane = new ChatPane(this);
-		mainViewPane.add(chatPane, BorderLayout.EAST);
+	
 
-		mainViewPane.add(playersPane, BorderLayout.WEST);
-		
 		menuPane= new MenuPane(this);
-		
+	
+
+		this.editeur = new EditeurClient(this);
+	
 		containerPane= new JPanel();
 		containerPane.setLayout(cl);
 		containerPane.add(menuPane,"1");
-		containerPane.add(mainViewPane,"2");
+		containerPane.add(waitingPane,"2");
+		
+		
+		
 		this.add(containerPane,BorderLayout.CENTER);
-	
-		
-		
+
+
+
 		cl.show(containerPane, "1");
 
 		setVisible(true);
@@ -178,7 +180,31 @@ public class FrameClient extends JFrame {
 		System.out.println(players);
 		playersPane.addPlayer(player);
 
-	}
+		
+		int count=1;
+		for (Map.Entry<String,Player> entry : players.entrySet())  {
+			if(entry.getValue().isInGame()) {
+				count++;
+			}
+		}
+		waitingPane.getProgressBar().setValue(count);
+		waitingPane.revalidate();
+		waitingPane.repaint();
+		if(count>3) {
+			
+			mainViewPane = new JPanel();
+			mainViewPane.setLayout(new BorderLayout());
+			mainViewPane.add(editeur, BorderLayout.CENTER);
+			mainViewPane.add(chatPane, BorderLayout.EAST);
+			mainViewPane.add(playersPane, BorderLayout.WEST);
+			editeur.creerChronometre();
+			containerPane.add(mainViewPane,"3");
+			
+			cl.show(containerPane, "3");
+		}
+
+	} 
+
 
 	public synchronized void setPlayerSketcher(String username, boolean sketcher) {
 		players.get(username).setSketcher(sketcher);
@@ -208,38 +234,38 @@ public class FrameClient extends JFrame {
 		return username;
 	}
 
-	public Player getPlayer() {
+	public Player getPlayer(String username) {
 		return players.get(username);
 	}
 
 	public void setChatPane(ChatPane chatPane) {
 		this.chatPane = chatPane;
 	}
-	
+
 	public void setGuesserPoints(int points) {
-		int score = getPlayer().getPoints();
+		int score = getPlayer(username).getPoints();
 		score += points;
-		getPlayer().setPoints(score);
-		playersPane.setPoints(getPlayer().getUsername(), score);
+		getPlayer(username).setPoints(score);
+		playersPane.setPoints(getPlayer(username).getUsername(), score);
 	}
-	
+
 	public void setSketcherPoints(int points) {
 		for(Map.Entry<String, Player> entry : players.entrySet()) {
-		    //String key = entry.getKey();
-		    Player player = entry.getValue();
-		    if (player.isSketcher()) {
-		    	int score = player.getPoints();
+			//String key = entry.getKey();
+			Player player = entry.getValue();
+			if (player.isSketcher()) {
+				int score = player.getPoints();
 				score += points;
 				player.setPoints(score);
 				playersPane.setPoints(player.getUsername(), score);
-		    }
+			}
 		}
 	}
-	
+
 	public CardLayout getCardLayout() {
 		return cl;
 	}
-	
+
 	public JPanel getContainerPane() {
 		return containerPane;
 	}
@@ -247,7 +273,7 @@ public class FrameClient extends JFrame {
 		RandomWords randomWords = new RandomWords();
 		words = randomWords.selectWords();
 	}
-	
+
 	public String nextWord() {
 		String nextWord;
 		if (round < words.size()) {
