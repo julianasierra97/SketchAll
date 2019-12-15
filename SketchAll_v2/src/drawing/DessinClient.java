@@ -2,7 +2,6 @@ package drawing;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseMotionListener;
 import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
@@ -10,9 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import editeur.ZoneDeDessin;
-import listener.CreationListener;
 import listener.ModificationListener;
-import listener.SelectionListener;
 import server.RemoteDessinServeur;
 
 public abstract class DessinClient extends JPanel {

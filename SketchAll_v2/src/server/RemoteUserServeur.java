@@ -10,5 +10,6 @@ public interface RemoteUserServeur extends Remote {
 	public String getUsername() throws RemoteException ;
 	public int getPoints() throws RemoteException ;
 	public boolean isSketcher() throws RemoteException;
+	public void setInGame(boolean inGame) throws RemoteException;
 
 }

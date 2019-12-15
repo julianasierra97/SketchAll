@@ -11,14 +11,15 @@ public class Player {
 	private Random random = new Random();
 	private boolean sketcher;
 	private RemoteUserServeur proxy;
+	private boolean inGame;
+
 
 	public Player(RemoteUserServeur proxy, String username) {
 		super();
 		this.username = username;
 		this.points = 0;
 		
-		this.sketcher = random.nextBoolean();
-		System.out.println(random.nextBoolean());
+		this.sketcher = false;
 		this.proxy = proxy;
 		
 		
@@ -47,6 +48,14 @@ public class Player {
 
 	public RemoteUserServeur getProxy() {
 		return proxy;
+	}
+	
+	public boolean isInGame() {
+		return inGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
 	}
 
 }

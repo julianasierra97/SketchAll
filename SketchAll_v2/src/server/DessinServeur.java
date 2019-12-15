@@ -78,6 +78,8 @@ public class DessinServeur extends UnicastRemoteObject implements RemoteDessinSe
 			emetteur.diffuseMessage ("Location", getName (), hm) ;
 		}
 	}
+	
+	
 
 	public String getName () throws RemoteException {
 		return name ;

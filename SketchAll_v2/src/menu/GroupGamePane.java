@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +96,12 @@ public class GroupGamePane extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			fc.setSize(1300, 900);
 			fc.getCardLayout().show(fc.getContainerPane(), "2");
+			try {
+				fc.getServer().getPlayer(fc.getUsername()).setInGame(true);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}
 		

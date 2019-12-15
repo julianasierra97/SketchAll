@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;

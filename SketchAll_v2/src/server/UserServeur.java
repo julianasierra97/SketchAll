@@ -18,6 +18,7 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 	private String username;
 	private int points;
 	private boolean sketcher;
+	private boolean inGame;
 	
 	// un attribut permettant au User de diffuser directement ses mises à jour, sans passer par le serveur associé
 		// - cet attribut n'est pas Serializable, du coup on le déclare transient pour qu'il ne soit pas inclu dans la sérialisation
@@ -28,6 +29,7 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			this.username = username ;
 			this.sketcher = true;
 			this.points = 0;
+			this.inGame=false;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put ("points", new Integer (0)) ;
 			hm.put ("sketcher", sketcher) ;
@@ -38,6 +40,7 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			}
 		}
 		
+
 		public void setSketcher(boolean sketcher) throws RemoteException{
 			this.sketcher = sketcher;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
@@ -72,5 +75,18 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			return points;
 		}
 		
-		
+		public boolean isInGame() {
+			return inGame;
+		}
+
+		public void setInGame(boolean inGame) throws RemoteException {
+			this.inGame = inGame;
+			HashMap<String, Object> hm = new HashMap <String, Object> () ;
+			hm.put("inGame", inGame);
+			hm.put ("name", this.username);
+			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			for (EmetteurUnicast sender : emetteurs) {
+				sender.diffuseMessage ("In game", getUsername (), hm) ;
+			}
+		}
 }

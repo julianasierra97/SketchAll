@@ -8,7 +8,6 @@ import java.awt.event.MouseMotionListener ;
 
 import drawing.DessinClient;
 import editeur.ZoneDeDessin;
-import javafx.scene.Parent;
 
 //---------------------------------------------------------------------------
 
