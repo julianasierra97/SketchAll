@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +11,6 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import communication.RecepteurUnicast;
 import editeur.EditeurClient;

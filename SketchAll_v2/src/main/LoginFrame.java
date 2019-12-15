@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
@@ -23,7 +25,7 @@ import javax.swing.border.EmptyBorder;
 
 import server.RemoteEditeurServeur;
 
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	JLabel message;
@@ -60,25 +62,25 @@ public class LoginFrame extends JFrame {
 		}
 
 		JLabel user_label = new JLabel();
-		user_label.setFont(new Font("Arial", Font.PLAIN, 40));
+		user_label.setFont(new Font("Arial", Font.PLAIN, 20));
 		user_label.setText("User Name :");
 		username_text = new JTextField();
-		username_text.setFont(new Font("Arial", Font.PLAIN, 40));
+		username_text.setFont(new Font("Arial", Font.PLAIN, 20));
 		JLabel password_label = new JLabel();
-		password_label.setFont(new Font("Arial", Font.PLAIN, 40));
+		password_label.setFont(new Font("Arial", Font.PLAIN, 20));
 		password_label.setText("Password :");
 		password_text = new JPasswordField();
-		password_text.setFont(new Font("Arial", Font.PLAIN, 40));
+		password_text.setFont(new Font("Arial", Font.PLAIN, 20));
 
 		JButton submit = new JButton("SUBMIT");
-		submit.setPreferredSize(new Dimension(200, 100));
-		submit.setFont(new Font("Arial", Font.PLAIN, 40));
+		submit.setPreferredSize(new Dimension(200, 60));
+		submit.setFont(new Font("Arial", Font.PLAIN, 25));
 		submit.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JPanel userpanel = new JPanel(new GridLayout(1, 2, 10, 20));
-		userpanel.setPreferredSize(new Dimension(500, 60));
+		userpanel.setPreferredSize(new Dimension(500, 40));
 		JPanel passwordpanel = new JPanel(new GridLayout(1, 2, 10, 20));
-		passwordpanel.setPreferredSize(new Dimension(500, 60));
+		passwordpanel.setPreferredSize(new Dimension(500, 40));
 		userpanel.add(user_label);
 		userpanel.add(username_text);
 		passwordpanel.add(password_label);
@@ -96,12 +98,33 @@ public class LoginFrame extends JFrame {
 		loginPane.add(passwordpanel);
 		loginPane.add(Box.createRigidArea(new Dimension(0, 20)));
 		loginPane.add(submit);
-		setTitle("Login Here !");
+		addKeyListener(this);
+		setTitle("Login");
 		setLocationRelativeTo(null);
-		setSize(800, 500);
+		setSize(500, 300);
 		add(loginPane);
 		setVisible(true);
 
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println("typed");
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("pressed");
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_ENTER) {
+		}		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		System.out.println("released");
+		
 	}
 
 	class LoginListener implements ActionListener {
@@ -110,7 +133,6 @@ public class LoginFrame extends JFrame {
 
 		public LoginListener(LoginFrame login) {
 			this.login = login;
-
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
@@ -140,4 +162,6 @@ public class LoginFrame extends JFrame {
 	public FrameClient createClient(String username) {
 		return new FrameClient(clientMachineName,  username, server);
 	}
+
+	
 }

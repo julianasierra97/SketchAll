@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
-import javafx.scene.control.ProgressBar;
-
 public class WaitingPanel extends JPanel {
 	
 	JProgressBar progressBar;
@@ -37,7 +35,7 @@ public class WaitingPanel extends JPanel {
 		lblPleaseWaitUntil.setBorder(new EmptyBorder(70,40,40,40));
 		panel.add(lblPleaseWaitUntil);
 
-		 panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
