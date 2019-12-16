@@ -39,9 +39,9 @@ public class SizePane extends JPanel {
 	SizeButton rectButton = new SizeButton("Rectangle", 0);
 	SizeButton ellipseButton = new SizeButton("Ellipse", 0);
 	SizeButton deleteButton = new SizeButton("Delete", 0);
-	SizeButton smallButton = new SizeButton("Drawing", 6);
-	SizeButton mediumButton = new SizeButton("Drawing", 9);
-	SizeButton bigButton = new SizeButton("Drawing", 12);
+	SizeButton smallButton = new SizeButton("Drawing", 9);
+	SizeButton mediumButton = new SizeButton("Drawing", 12);
+	SizeButton bigButton = new SizeButton("Drawing", 15);
 
 	public SizePane(EditeurClient editor, ToolPane tool) {
 		this.editor = editor;

@@ -2,6 +2,7 @@ package main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Toolkit;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
@@ -133,6 +134,7 @@ public class FrameClient extends JFrame {
 		cl= new CardLayout();
 		this.setTitle("SketchAll");
 		this.setLocationRelativeTo(null);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FrameClient.class.getResource("favicon.jpg")));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chatPane = new ChatPane(this);
 	
