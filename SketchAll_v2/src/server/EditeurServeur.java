@@ -203,8 +203,16 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		}
 	}
 	
-	public void deleteDessin() {
-		
+	public void deleteDessin(String name) {
+		if (sharedDrawings.containsKey(name)){
+			sharedDrawings.remove(name);
+			HashMap<String, Object> hm = new HashMap <String, Object> () ;
+			hm.put ("name", name);
+			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			for (EmetteurUnicast sender : transmitters) {
+				sender.diffuseMessage ("Delete dessin", name, hm) ;
+			}
+		}
 	}
 
 }
