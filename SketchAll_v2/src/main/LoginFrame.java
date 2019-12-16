@@ -142,6 +142,7 @@ public class LoginFrame extends JFrame implements KeyListener {
 			try {
 				if (server.loginCorrect(username, password)) {
 					dispose();
+					login.createClient(username);
 
 				} else {
 					JOptionPane.showMessageDialog(null, "The username and password are not correct!", "Login Error",
@@ -154,7 +155,6 @@ public class LoginFrame extends JFrame implements KeyListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			login.createClient(username);
 		}
 
 	}

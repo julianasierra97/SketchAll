@@ -81,12 +81,6 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 
 		public void setInGame(boolean inGame) throws RemoteException {
 			this.inGame = inGame;
-			HashMap<String, Object> hm = new HashMap <String, Object> () ;
-			hm.put("inGame", inGame);
-			hm.put ("name", this.username);
-			// envoi des mises à jour à tous les clients, via la liste des émetteurs
-			for (EmetteurUnicast sender : emetteurs) {
-				sender.diffuseMessage ("In game", getUsername (), hm) ;
-			}
+			
 		}
 }

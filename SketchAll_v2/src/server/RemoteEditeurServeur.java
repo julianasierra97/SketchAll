@@ -26,6 +26,6 @@ public interface RemoteEditeurServeur extends Remote {
    HashMap<String,RemoteUserServeur> getPlayerList () throws RemoteException ;
    void sendMessage(String username, String message)throws RemoteException;
    boolean loginCorrect(String username, String password) throws RemoteException;
-   
+   public void setClientInGame(String username, boolean inGame) throws RemoteException;
 
 }

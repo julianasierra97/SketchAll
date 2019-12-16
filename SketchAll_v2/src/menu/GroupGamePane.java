@@ -97,7 +97,7 @@ public class GroupGamePane extends JPanel {
 			fc.setSize(1300, 900);
 			fc.getCardLayout().show(fc.getContainerPane(), "2");
 			try {
-				fc.getServer().getPlayer(fc.getUsername()).setInGame(true);
+				fc.getServer().setClientInGame(fc.getUsername(), true);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
