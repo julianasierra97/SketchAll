@@ -215,10 +215,6 @@ public class EditeurClient extends JPanel {
 		return ZoneDeDessin;
 	}
 
-	public ShapePane getShapePane() {
-		return toolPane.getShapePane();
-	}
-
 	public void setShape(DessinClient shape) {
 		shapeToCreate = shape;
 	}
