@@ -14,10 +14,17 @@ public class PartieServeur {
 	
 	public void addPlayer(String username) {
 		gameList.add(username);
+		if (isComplete()) {
+			startGame();
+		}
 	}
 	
 	public boolean isComplete() {
-		return true;
+		return (gameList.size()>3);
+	}
+	
+	public void startGame() {
+		
 	}
 
 }

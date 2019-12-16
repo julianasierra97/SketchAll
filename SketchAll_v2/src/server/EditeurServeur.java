@@ -44,6 +44,8 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	
 	private HashMap<String,String> loginList;
 	
+	private PartieServeur partie;
+	
 
 	// le constructeur du serveur : il le d�clare sur un port rmi de la machine d'ex�cution
 	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate, HashMap<String,String> loginList) throws RemoteException {
@@ -53,6 +55,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		this.portEmission = portEmissionUpdate ;
 		transmitters = new ArrayList<EmetteurUnicast> () ;
 		this.loginList=loginList;
+		partie = new PartieServeur(this);
 		try {
 			// attachcement sur serveur sur un port identifi� de la machine d'ex�cution
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMIServeur + "/" + nomServeur, this) ;
@@ -191,20 +194,27 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		
 	}
 	
-	public void setClientInGame(String username, boolean inGame) throws RemoteException {
+	public boolean setClientInGame(String username, boolean inGame) throws RemoteException {
 		
-		playerList.get(username).setInGame(inGame);
-		HashMap<String, Object> hm = new HashMap <String, Object> () ;
-		
-		hm.put("inGame", inGame);
-		hm.put ("name", username);
-		// envoi des mises à jour à tous les clients, via la liste des émetteurs
-		for (EmetteurUnicast sender : transmitters) {
-			sender.diffuseMessage ("InGame", username, hm) ;
+		if (partie.isComplete()){
+			return false;
+		}
+		else {
+			playerList.get(username).setInGame(inGame);
+			HashMap<String, Object> hm = new HashMap <String, Object> () ;
+			
+			
+			hm.put("inGame", inGame);
+			hm.put ("name", username);
+			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			for (EmetteurUnicast sender : transmitters) {
+				sender.diffuseMessage ("InGame", username, hm) ;
+			}
+			return true;
 		}
 	}
 	
-	public void deleteDessin(String name) {
+	public void deleteDessin(String name) throws RemoteException{
 		if (sharedDrawings.containsKey(name)){
 			sharedDrawings.remove(name);
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
