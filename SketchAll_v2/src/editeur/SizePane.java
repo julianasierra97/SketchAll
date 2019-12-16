@@ -1,20 +1,23 @@
 package editeur;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -25,16 +28,17 @@ public class SizePane extends JPanel {
 
 	EditeurClient editor;
 	
-	PropertyChangeSupport sizeChange = new PropertyChangeSupport(this);
 	GridBagConstraints gbc;
 	List<SizeButton> buttonList = new ArrayList<SizeButton>();
-	int oldSize;
+	String newShape = "Ellipse";
 	int newSize = 7 ;
 	
 	ButtonGroup sizeGroup = new ButtonGroup();
-	SizeButton smallButton = new SizeButton("Small", 6);
-	SizeButton mediumButton = new SizeButton("Medium", 9);
-	SizeButton bigButton = new SizeButton("Big", 12);
+	SizeButton rectButton = new SizeButton("Rectangle", 0);
+	SizeButton ellipseButton = new SizeButton("Ellipse", 0);
+	SizeButton smallButton = new SizeButton("Drawing", 6);
+	SizeButton mediumButton = new SizeButton("Drawing", 9);
+	SizeButton bigButton = new SizeButton("Drawing", 12);
 	
 	public SizePane(EditeurClient editor, ToolPane tool) {
 		this.editor = editor;
@@ -46,7 +50,7 @@ public class SizePane extends JPanel {
 		Color borderColor = new Color(160,160,160);
 		Font borderFont = new Font("Arial",1,17);
 		borderLine = BorderFactory.createLineBorder(borderColor);
-		border = BorderFactory.createTitledBorder(borderLine, "Sizes");
+		border = BorderFactory.createTitledBorder(borderLine, "Drawings");
 		border.setTitleFont(borderFont);
 		border.setTitleJustification(TitledBorder.LEFT);
 		border.setTitleColor(borderColor);
@@ -65,23 +69,24 @@ public class SizePane extends JPanel {
         addButtonsToPane();
 			
 		for (SizeButton button : buttonList) {
+			button.setPreferredSize(new Dimension(30, 10));
+			button.setBorder(BorderFactory.createBevelBorder(0, new Color(150,150,150), new Color(150,150,150)));
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					oldSize = newSize;
 					newSize = button.getRadius();
+					newShape = button.getShape();
 					sizeChanged();
+					shapeChanged();
+					button.setBorder(BorderFactory.createBevelBorder(1, new Color(105,105,105), new Color(120,120,120)));
+					for (SizeButton other : buttonList) {
+						if (other != button) {
+							other.setBorder(BorderFactory.createBevelBorder(0, new Color(150,150,150), new Color(150,150,150)));
+						}
+					}
 				}
 			});
 		}
 	}
-	
-    public void addPropertyChangeListener(PropertyChangeListener change) {
-        sizeChange.addPropertyChangeListener(change);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener change) {
-    	sizeChange.removePropertyChangeListener(change);
-    }
     
     public int getRadius() {
     	return newSize;
@@ -93,13 +98,28 @@ public class SizePane extends JPanel {
     
     public void sizeChanged() {
         editor.getZoneDeDessin().setRadius(newSize);
-        sizeChange.firePropertyChange("size", oldSize, newSize);
+    }
+    
+    public String getShape() {
+    	return newShape;
+    }
+    
+    public void setShape(String newShape) {
+    	this.newShape = newShape;
+    }
+    
+    public void shapeChanged() {
+        editor.getZoneDeDessin().setShape(newShape);
     }
 	
 	public void addButtonsToList() {
+		sizeGroup.add(rectButton);
+		sizeGroup.add(ellipseButton);
 		sizeGroup.add(smallButton);
 		sizeGroup.add(mediumButton);
 		sizeGroup.add(bigButton);
+		buttonList.add(rectButton);
+        buttonList.add(ellipseButton);
 		buttonList.add(smallButton);
         buttonList.add(mediumButton);
         buttonList.add(bigButton);
@@ -108,24 +128,55 @@ public class SizePane extends JPanel {
 	public void addButtonsToPane() {
         gbc.gridx = 0;
         gbc.gridy = 0;  
+        add(new JLabel("Lines"), gbc);
+        gbc.gridx++;
         add(smallButton, gbc);
         gbc.gridx++;
         add(mediumButton, gbc);
         gbc.gridx++;
         add(bigButton, gbc);
+        
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        add(new JLabel("Shapes"), gbc);
+        gbc.gridx++;
+        add(rectButton, gbc);
+        gbc.gridx++;
+        add(ellipseButton, gbc);
 	}
 	
-	class SizeButton extends JRadioButton {
+	class SizeButton extends JButton {
 		private static final long serialVersionUID = 1L;
+		String shape;
 		int size;
 		
-		public SizeButton (String name, int size) {
-			this.setText(name);
+		public SizeButton (String shape, int size) {
+			String imageName;
+			this.shape = shape;
 			this.size = size;
+			setToolTipText(shape);
+			
+			if (size == 0) {
+				imageName = shape + ".png";				
+			} else {
+				imageName = shape + size+ ".png";				
+			}
+
+			try {
+				Image shapeImage = ImageIO.read(getClass().getResource(imageName));
+				Image resizedImage = shapeImage.getScaledInstance(25, 25, Image.SCALE_SMOOTH); // Bords lisses
+				setIcon(new ImageIcon(resizedImage));
+			} catch (Exception ex) {
+				setEnabled(false);
+			}
 		}
-		
+
 		public int getRadius() {
 			return size;
+		}
+		
+		public String getShape() {
+			return shape;
 		}
 	}
 	

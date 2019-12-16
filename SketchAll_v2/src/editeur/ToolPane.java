@@ -15,7 +15,7 @@ public class ToolPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	GridBagConstraints gbc;
-	ShapePane shape;
+	//ShapePane shape;
 	ColorPane color;
 	SizePane size;
 	
@@ -31,7 +31,7 @@ public class ToolPane extends JPanel {
 		setBorder(borderBis);
 		
 		size = new SizePane(editor, this);
-		shape = new ShapePane(editor, this);
+		//shape = new ShapePane(editor, this);
 		color = new ColorPane(editor, this);
 		
         gbc = new GridBagConstraints();
@@ -44,19 +44,19 @@ public class ToolPane extends JPanel {
         gbc.insets = new Insets(4, 4, 4, 4);		//Top, left, bottom, right
 		
         add(size, gbc);
-        size.setPreferredSize(new Dimension(50,90));
+        size.setPreferredSize(new Dimension(50,130));
         
-		gbc.gridx++;
-        add(shape, gbc);
-        shape.setPreferredSize(new Dimension(50,90));
-		
+//		gbc.gridx++;
+//        add(shape, gbc);
+//        shape.setPreferredSize(new Dimension(50,90));
+//		
         gbc.gridx++;
         add(color, gbc);
-        color.setPreferredSize(new Dimension(200,200));
+        color.setPreferredSize(new Dimension(300,130));
 	}
 	
-	public ShapePane getShapePane() {
-		return shape;
-	}
+//	public ShapePane getShapePane() {
+//		return shape;
+//	}
 	
 }
