@@ -14,13 +14,14 @@ public class Player {
 	private boolean inGame;
 
 
-	public Player(RemoteUserServeur proxy, String username) {
+	public Player(RemoteUserServeur proxy, String username, boolean inGame) {
 		super();
 		this.username = username;
 		this.points = 0;
 		
 		this.sketcher = false;
 		this.proxy = proxy;
+		this.inGame=inGame;
 		
 		
 		//this.sketcher = true;
