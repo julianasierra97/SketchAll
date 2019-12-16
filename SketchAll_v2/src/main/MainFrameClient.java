@@ -7,6 +7,7 @@ public class MainFrameClient {
 
 	// main permettant de lancer un éditeur local 
 		public static void main (String args[]){
+			System.setProperty("java.net.preferIPv4Stack", "true");
 			// le nom de la machine qui héberge le serveur distant
 			// String nomMachineServeur = "10.29.227.68" ;
 			String serverMachineName = "localhost" ; // mettre l'adresse IP de votre serveur ici

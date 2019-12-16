@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -100,6 +101,7 @@ public class LoginFrame extends JFrame implements KeyListener {
 		loginPane.add(submit);
 		addKeyListener(this);
 		setTitle("Login");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameClient.class.getResource("favicon.jpg")));
 		setLocationRelativeTo(null);
 		setSize(500, 300);
 		add(loginPane);
