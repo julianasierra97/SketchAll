@@ -242,12 +242,14 @@ public class EditeurClient extends JPanel {
 	
 	public void deleteDessin(String dessin) {
 		
-		System.out.println("desskds:"+dessin);
-		System.out.println((drawings.get(dessin)));
-		ZoneDeDessin.remove(drawings.get(dessin));
-		drawings.remove(dessin);
-		repaint();
-		revalidate();
+		if(drawings.containsKey(dessin)) {
+			ZoneDeDessin.remove(drawings.get(dessin));
+			drawings.remove(dessin);
+				repaint();
+				revalidate();
+		}
+		
+	
 	}
 
 }
