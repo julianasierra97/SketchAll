@@ -22,8 +22,8 @@ public class MyTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		for (int i = 60; i >0; i--) {
-			if(i==1){
+		for (int i = 60; i >=0; i--) {
+			if(i==0){
 
 				editeur.newGame();
 			}

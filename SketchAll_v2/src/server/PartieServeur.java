@@ -7,6 +7,7 @@ public class PartieServeur {
 
 	private ArrayList<String> gameList = new ArrayList<String>();
 	private EditeurServeur server;
+	private ArrayList<String> words;
 	
 	public PartieServeur(EditeurServeur server) {
 		this.server=server;
@@ -24,6 +25,10 @@ public class PartieServeur {
 	}
 	
 	public void startGame() {
+		
+	}
+	public void newRound() {
+		new 
 		
 	}
 
