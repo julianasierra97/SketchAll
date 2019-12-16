@@ -248,7 +248,10 @@ public class FrameClient extends JFrame {
 		words = randomWords.selectWords();
 	}
 
-	public String nextWord() {
+	public String nextWord() {    
+		
+		
+		
 		String nextWord;
 		if (round < words.size()) {
 			nextWord = words.get(round);
