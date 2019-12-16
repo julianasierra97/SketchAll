@@ -1,34 +1,43 @@
 package server;
 
+import java.rmi.RemoteException;
 import java.util.TimerTask;
 
 public class TimerTaskServeur extends TimerTask{
 	
 	private PartieServeur partie;
+	private int compteur;
 	
+
 	public TimerTaskServeur(PartieServeur partie) {
 		super();
 		this.partie = partie;
+		
 	}
 
 	@Override
 	public void run() {
-		for (int i = 70; i >=0; i--) {
+		while (compteur>0) {
+			compteur-=1;
+			completeTask();
 			
-			
-			if(i==65){
+			if(compteur==65){
+				for (String player : partie.getGameList()) {
+					try {
+						partie.getServer().getPlayerList().get(player).startRound();
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
 
 			}
 
-			if(i>=10) {
-				
-				completeTask();
+			if(compteur ==5) {
+				partie.gameEnd();
+			}
 
-			}
-			else {
-				
-				completeTask();
-			}
 		}
 
 	}
@@ -42,6 +51,10 @@ public class TimerTaskServeur extends TimerTask{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setCompteur(int compteur) {
+		this.compteur = compteur;
 	}
 
 }

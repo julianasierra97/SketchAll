@@ -181,6 +181,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		for (EmetteurUnicast sender : transmitters) {
 			sender.diffuseMessage ("Send message", username, hm) ;
 		}
+		
 	}
 	
 	public boolean loginCorrect(String username, String password) throws RemoteException{

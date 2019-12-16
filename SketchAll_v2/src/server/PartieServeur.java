@@ -11,6 +11,7 @@ public class PartieServeur {
 	private EditeurServeur server;
 	private ArrayList<String> words;
 	private ArrayList<Integer> couplesSketcher;
+	private ArrayList<String> winners;
 	
 	public PartieServeur(EditeurServeur server) {
 		this.server=server;
@@ -20,7 +21,7 @@ public class PartieServeur {
 	public void addPlayer(String username) {
 		gameList.add(username);
 		if (isComplete()) {
-			startGame();
+			newRound(words.remove(0));;
 		}
 	}
 	
@@ -29,13 +30,10 @@ public class PartieServeur {
 		return (gameList.size()>3);
 	}
 	
-	public void startGame() {
-		for (String word : words) {
-			
-		}
-	}
+	
 	
 	public void newRound(String word) {
+		winners = new ArrayList<String>();
 		int couple = couplesSketcher.remove(couplesSketcher.size()-1);
 		try {
 			//on recupere le couple
@@ -55,6 +53,7 @@ public class PartieServeur {
 		
 	}
 	
+
 	// On initialise un array représentant les combinaisons possibles de sketchers stockées sous formes d'entiers
 	public void initCouples(){
 		couplesSketcher = new ArrayList<Integer>();
@@ -70,6 +69,20 @@ public class PartieServeur {
 	
 	public EditeurServeur getServer() {
 		return server;
+	}
+	
+	public void tryWord(String username, String word) {
+		if (word==words.get(0)) {
+			
+		}
+	}
+	
+	public ArrayList<String> getGameList() {
+		return gameList;
+	}
+	
+	public void gameEnd() {
+		
 	}
 
 }

@@ -33,6 +33,7 @@ public class MainEditeurServeur {
 		loginList.put("user1","ok1");
 		loginList.put("user2","ok2");
 		loginList.put("Stan","cookie");
+		loginList.put("test","");
 		
 		return loginList;
 	}

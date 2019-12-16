@@ -91,4 +91,22 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			// TODO Auto-generated method stub
 			return inGame;
 		}
+		
+		public void startRound() throws RemoteException{
+			HashMap<String, Object> hm = new HashMap <String, Object> () ;
+			hm.put ("name", this.username);
+			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			for (EmetteurUnicast sender : emetteurs) {
+				sender.diffuseMessage ("Start", getUsername (), hm) ;
+			}
+		}
+		
+		public void hasWon() throws RemoteException{
+			HashMap<String, Object> hm = new HashMap <String, Object> () ;
+			hm.put ("name", this.username);
+			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			for (EmetteurUnicast sender : emetteurs) {
+				sender.diffuseMessage ("Has won", getUsername (), hm) ;
+			}
+		}
 }
