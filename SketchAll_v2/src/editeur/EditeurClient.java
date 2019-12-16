@@ -243,5 +243,11 @@ public class EditeurClient extends JPanel {
 		boolean isSketcher = getFrame().getPlayer(frame.getUsername()).isSketcher();
 		return isSketcher;
 	}
+	
+	public void deleteDessin(String name) {
+		DessinClient dessin = drawings.get(name);
+		drawings.remove(name);
+		ZoneDeDessin.remove(dessin);
+	}
 
 }

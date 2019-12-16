@@ -202,5 +202,9 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 			sender.diffuseMessage ("In game", username, hm) ;
 		}
 	}
+	
+	public void deleteDessin() {
+		
+	}
 
 }

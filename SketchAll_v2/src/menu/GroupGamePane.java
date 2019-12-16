@@ -95,7 +95,7 @@ public class GroupGamePane extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			fc.setSize(1300, 900);
-			fc.getCardLayout().show(fc.getContainerPane(), "2");
+			fc.getCardLayout().show(fc.getContainerPane(), "3");
 			try {
 				fc.getServer().setClientInGame(fc.getUsername(), true);
 			} catch (RemoteException e1) {
