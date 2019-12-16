@@ -219,7 +219,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 			sharedDrawings.remove(name);
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put ("name", name);
-			// envoi des mises à jour à tous les clients, via la liste des émetteurs
+			// envoi des mises ï¿½ jour ï¿½ tous les clients, via la liste des ï¿½metteurs
 			for (EmetteurUnicast sender : transmitters) {
 				sender.diffuseMessage ("Delete dessin", name, hm) ;
 			}

@@ -23,7 +23,7 @@ public abstract class DessinClient extends JPanel {
 	   boolean selection;
 	   
 
-	   // constructeur Dessin : paramétré par une instance de RemoteDessin permettant d'envoyer des informations au référent sur le serveur 
+	   // constructeur Dessin : paramï¿½trï¿½ par une instance de RemoteDessin permettant d'envoyer des informations au rï¿½fï¿½rent sur le serveur 
 	   public DessinClient (ZoneDeDessin sheet, RemoteDessinServeur proxy) {
 		   this.sheet = sheet;
 		   this.proxy = proxy ;
@@ -36,14 +36,25 @@ public abstract class DessinClient extends JPanel {
 		   setSelection(false);
 	   }
 	
+	   
+	  public String getName() {
+		 String name="";
+		  try {
+			name= proxy.getName();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return name;
+	  }
 
 	public void setProxyColor (Color color) {
 		   setForeground (color) ;
 	   }
 	   
-	   // méthode permettant de "retailler" un Dessin :
-	   // - elle réalise un "setBounds" pour fournir un retour visuel immédiat)
-	   // - ensuite elle propage le changement au référent, vie une remote invocation sur le proxy  
+	   // mï¿½thode permettant de "retailler" un Dessin :
+	   // - elle rï¿½alise un "setBounds" pour fournir un retour visuel immï¿½diat)
+	   // - ensuite elle propage le changement au rï¿½fï¿½rent, vie une remote invocation sur le proxy  
 	   public void setProxyBounds (int x, int y, int w, int h) {
 		   setBounds (x, y, w, h) ;
 		   try {
@@ -53,9 +64,9 @@ public abstract class DessinClient extends JPanel {
 		   }
 	   }
 
-	   // méthode permettant de déplacer un Dessin :
-	   // - elle réalise un "setLocation" pour fournir un retour visuel immédiat
-	   // - ensuite elle propage le changement au référent, vie une remote invocation sur le proxy  
+	   // mï¿½thode permettant de dï¿½placer un Dessin :
+	   // - elle rï¿½alise un "setLocation" pour fournir un retour visuel immï¿½diat
+	   // - ensuite elle propage le changement au rï¿½fï¿½rent, vie une remote invocation sur le proxy  
 	   public void setProxyLocation (int x, int y) {
 		   setLocation (x, y) ;
 		   try {

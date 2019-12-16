@@ -7,6 +7,8 @@ import java.rmi.RemoteException ;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import drawing.DessinClient;
+
 
 // interface qui décrit les services offerts par un proxy d'éditeur(côté serveur) :
 // - quand un client demandera à accéder à distance à un tel éditeur, il récupérera un proxy de cet éditeur
