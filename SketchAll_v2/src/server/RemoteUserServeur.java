@@ -11,5 +11,6 @@ public interface RemoteUserServeur extends Remote {
 	public int getPoints() throws RemoteException ;
 	public boolean isSketcher() throws RemoteException;
 	public void setInGame(boolean inGame) throws RemoteException;
+	public boolean getInGame();
 
 }

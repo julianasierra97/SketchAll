@@ -83,4 +83,11 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 			this.inGame = inGame;
 			
 		}
+
+
+		@Override
+		public boolean getInGame() {
+			// TODO Auto-generated method stub
+			return inGame;
+		}
 }

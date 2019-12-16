@@ -102,7 +102,7 @@ public class FrameClient extends JFrame {
 					server.getPlayerList().values());
 			// ajout de tous les dessins dans la zone de dessin
 			for (RemoteUserServeur player : onlinePlayers) {
-				addPlayer(player.getUsername(), player);
+				addPlayer(player.getUsername(), player,player.getInGame());
 			}
 		} catch (Exception e) {
 			System.out.println("probleme liaison CentralManager");
@@ -163,7 +163,7 @@ public class FrameClient extends JFrame {
 		if (!players.containsKey(username)) {
 			try {
 				System.out.println("nbr of players : " + players.size());
-				this.addPlayer(username, server.getPlayer(username));
+				this.addPlayer(username, server.getPlayer(username),false);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -171,8 +171,8 @@ public class FrameClient extends JFrame {
 		}
 	}
 
-	public synchronized void addPlayer(String username, RemoteUserServeur proxy) {
-		Player player = new Player(proxy, username);
+	public synchronized void addPlayer(String username, RemoteUserServeur proxy, boolean inGame) {
+		Player player = new Player(proxy, username,inGame);
 		players.put(username, player);
 		System.out.println(players);
 		playersPane.addPlayer(player);
@@ -259,9 +259,9 @@ public class FrameClient extends JFrame {
 	}
 
 	public void setPlayerInGame(String name, boolean b) {
-	System.out.println("is in game");
+
 		getPlayers().get(name).setInGame(b);
-		int count=1;
+		int count=0;
 		for (Map.Entry<String,Player> entry : players.entrySet())  {
 		System.out.println(entry.getValue().isInGame()+"isIngame");
 			if(entry.getValue().isInGame()) {
