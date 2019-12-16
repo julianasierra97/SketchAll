@@ -177,29 +177,6 @@ public class FrameClient extends JFrame {
 		System.out.println(players);
 		playersPane.addPlayer(player);
 
-		
-		int count=1;
-		for (Map.Entry<String,Player> entry : players.entrySet())  {
-			if(entry.getValue().isInGame()) {
-				count++;
-			}
-		}
-		waitingPane.getProgressBar().setValue(count);
-		waitingPane.revalidate();
-		waitingPane.repaint();
-		if(count>3) {
-			
-			mainViewPane = new JPanel();
-			mainViewPane.setLayout(new BorderLayout());
-			mainViewPane.add(editeur, BorderLayout.CENTER);
-			mainViewPane.add(chatPane, BorderLayout.EAST);
-			mainViewPane.add(playersPane, BorderLayout.WEST);
-			editeur.creerChronometre();
-			containerPane.add(mainViewPane,"3");
-			
-			cl.show(containerPane, "3");
-		}
-
 	} 
 
 
@@ -279,5 +256,37 @@ public class FrameClient extends JFrame {
 			nextWord = null;
 		}
 		return nextWord;
+	}
+
+	public void setPlayerInGame(String name, boolean b) {
+	System.out.println("is in game");
+		getPlayers().get(name).setInGame(b);
+		int count=1;
+		for (Map.Entry<String,Player> entry : players.entrySet())  {
+		System.out.println(entry.getValue().isInGame()+"isIngame");
+			if(entry.getValue().isInGame()) {
+				count++;
+			}
+		}
+		
+		waitingPane.getProgressBar().setValue(count);
+		waitingPane.revalidate();
+		waitingPane.repaint();
+		revalidate();
+		repaint();
+		if(count>3) {
+			
+			mainViewPane = new JPanel();
+			mainViewPane.setLayout(new BorderLayout());
+			mainViewPane.add(editeur, BorderLayout.CENTER);
+			mainViewPane.add(chatPane, BorderLayout.EAST);
+			mainViewPane.add(playersPane, BorderLayout.WEST);
+			editeur.creerChronometre();
+			containerPane.add(mainViewPane,"3");
+			
+			cl.show(containerPane, "3");
+		}
+
+		
 	}
 }

@@ -94,9 +94,9 @@ public class RecepteurUnicast extends Thread implements Runnable {
 			}else if (command.equals ("Points")) {
 				// diffusion message
 				localClient.setPlayerPoints(name, (int)hm.get("points"));
-			}else if (command.equals ("In Game")) {
-				// diffusion message
-				localClient.getPlayers().get(name).setInGame((boolean)hm.get("inGame"));
+			}else if (command.equals ("InGame")) {
+				System.out.println("etnro in game");
+				localClient.setPlayerInGame(name,(boolean)hm.get("inGame") );
 			}else if (command.equals ("Delete dessin")) {
 				// diffusion message
 				localClient.getEditeur().deleteDessin(name);

@@ -12,31 +12,31 @@ import java.util.List;
 
 import communication.EmetteurUnicast ;
 
-//classe d'éditeur présente sur le serveur :
-//- pour pouvoir invoquer des méthodes Ã  distance, elle doit étendre UnicastRemote object ou implémenter l'interface Remote
-//- ici elle fait les deux (car l'interface RemoteEditeurServeur étend l'interface Remote)
-//- la classe doit également Ãªtre Serializable si on veut la transmettre sur le réseau
+//classe d'ï¿½diteur prï¿½sente sur le serveur :
+//- pour pouvoir invoquer des mï¿½thodes Ã  distance, elle doit ï¿½tendre UnicastRemote object ou implï¿½menter l'interface Remote
+//- ici elle fait les deux (car l'interface RemoteEditeurServeur ï¿½tend l'interface Remote)
+//- la classe doit ï¿½galement Ãªtre Serializable si on veut la transmettre sur le rï¿½seau
 public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeurServeur, Serializable {
 
 	// le nom du serveur
 	protected String nomServeur ;
 
-	// le port sur lequel est déclaré le serveur
+	// le port sur lequel est dï¿½clarï¿½ le serveur
 	protected int portRMI ;
 	
 	// la machine sur laquelle se trouve le serveur
 	protected String nomMachineServeur ;
 
-	// un entier pour générer des noms de dessins différents
+	// un entier pour gï¿½nï¿½rer des noms de dessins diffï¿½rents
 	protected int idDrawing ;
 
-	// un entier pour générer des noms de dessins différents
+	// un entier pour gï¿½nï¿½rer des noms de dessins diffï¿½rents
 	protected int portEmission ;
 	
-	// un diffuseur Ã  une liste d'abonnés
+	// un diffuseur Ã  une liste d'abonnï¿½s
 	private List<EmetteurUnicast> transmitters ;
 	
-	// une strutcure pour stocker tous les dessins et y accéder facilement 
+	// une strutcure pour stocker tous les dessins et y accï¿½der facilement 
 	private HashMap<String, RemoteDessinServeur> sharedDrawings = new HashMap<String, RemoteDessinServeur> () ;
 	
 	// liste des joueurs
@@ -44,7 +44,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	
 	private HashMap<String,String> loginList;
 
-	// le constructeur du serveur : il le déclare sur un port rmi de la machine d'exécution
+	// le constructeur du serveur : il le dï¿½clare sur un port rmi de la machine d'exï¿½cution
 	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate, HashMap<String,String> loginList) throws RemoteException {
 		this.nomServeur = nomServeur ;
 		this.nomMachineServeur = nomMachineServeur ;
@@ -53,7 +53,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		transmitters = new ArrayList<EmetteurUnicast> () ;
 		this.loginList=loginList;
 		try {
-			// attachcement sur serveur sur un port identifié de la machine d'exécution
+			// attachcement sur serveur sur un port identifiï¿½ de la machine d'exï¿½cution
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMIServeur + "/" + nomServeur, this) ;
 			System.out.println ("pret pour le service") ;
 		} catch (Exception e) {
@@ -66,29 +66,29 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		return portRMI ;
 	}
 
-	// méthode permettant d'enregistrer un dessin sur un port rmi sur la machine du serveur :
-	// - comme cela on pourra également invoquer directement des méthodes en rmi également sur chaque dessin
+	// mï¿½thode permettant d'enregistrer un dessin sur un port rmi sur la machine du serveur :
+	// - comme cela on pourra ï¿½galement invoquer directement des mï¿½thodes en rmi ï¿½galement sur chaque dessin
 	public void registerObject (RemoteDessinServeur dessin) {
 		try {
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMI + "/" + dessin.getName (), dessin) ;
 		} catch (Exception e) {
 			e.printStackTrace () ;
 			try {
-				System.out.println ("échec lors de l'ajout de l'objet " + dessin.getName () + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
+				System.out.println ("ï¿½chec lors de l'ajout de l'objet " + dessin.getName () + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
 		}
 	}
 	
-	//méthode permettant d'enregistrer un utilisateur sur un port rmi
+	//mï¿½thode permettant d'enregistrer un utilisateur sur un port rmi
 	public void registerPlayer (RemoteUserServeur player) {
 		try {
 			Naming.rebind ("//" + nomMachineServeur + ":" + portRMI + "/" + player.getUsername(), player) ;
 		} catch (Exception e) {
 			e.printStackTrace () ;
 			try {
-				System.out.println ("échec lors de l'ajout de l'objet " + player.getUsername() + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
+				System.out.println ("ï¿½chec lors de l'ajout de l'objet " + player.getUsername() + " sur le serveur " + nomMachineServeur + "/"+ portRMI) ;
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
@@ -100,48 +100,48 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	 */
 	private static final long serialVersionUID = 1L ;
 
-	// méthodes permettant d'ajouter un nouveau dessin dans le système
+	// mï¿½thodes permettant d'ajouter un nouveau dessin dans le systï¿½me
 	@Override
 	public synchronized RemoteDessinServeur addDessin (int x, int y, int w, int h, Color color, String shapeType) throws RemoteException {
-		// création d'un nouveau nom, unique, destiné Ã  servir de clé d'accès au dessin
-		// et création d'un nouveau dessin de ce nom et associé également Ã  un émetteur multicast...
-		// attention : la classe Dessin utilisée ici est celle du package serveur (et pas celle du package client)
+		// crï¿½ation d'un nouveau nom, unique, destinï¿½ Ã  servir de clï¿½ d'accï¿½s au dessin
+		// et crï¿½ation d'un nouveau dessin de ce nom et associï¿½ ï¿½galement Ã  un ï¿½metteur multicast...
+		// attention : la classe Dessin utilisï¿½e ici est celle du package serveur (et pas celle du package client)
 		RemoteDessinServeur drawing = new DessinServeur ("dessin" + nextId (), transmitters, color, shapeType) ;
-		// enregistrement du dessin pour accès rmi distant
+		// enregistrement du dessin pour accï¿½s rmi distant
 		registerObject (drawing) ;
-		// ajout du dessin dans la liste des dessins pour accès plus efficace au dessin
+		// ajout du dessin dans la liste des dessins pour accï¿½s plus efficace au dessin
 		sharedDrawings.put (drawing.getName (), drawing) ;
-		// renvoi du dessin Ã  l'éditeur local appelant : l'éditeur local récupèrera seulement un RemoteDessin
-		// sur lequel il pourra invoquer des méthodes en rmi et qui seront relayées au référent associé sur le serveur  
+		// renvoi du dessin Ã  l'ï¿½diteur local appelant : l'ï¿½diteur local rï¿½cupï¿½rera seulement un RemoteDessin
+		// sur lequel il pourra invoquer des mï¿½thodes en rmi et qui seront relayï¿½es au rï¿½fï¿½rent associï¿½ sur le serveur  
 		return drawing ;
 	}
 
-	// méthode permettant d'accéder Ã  un proxy d'un des dessins
+	// mï¿½thode permettant d'accï¿½der Ã  un proxy d'un des dessins
 	@Override
 	public synchronized RemoteDessinServeur getDessin (String name) throws RemoteException {
-		//System.out.println ("getDessin " + name + " dans dessinsPartagés = " + dessinsPartages) ;
+		//System.out.println ("getDessin " + name + " dans dessinsPartagï¿½s = " + dessinsPartages) ;
 		return sharedDrawings.get (name) ;
 	}
 	
 	
 
-	// méthode qui incrémente le compteur de dessins pour avoir un id unique pour chaque dessin :
-	// dans une version ultérieure avec récupération de dessins Ã  aprtir d'une sauvegarde, il faudra également avoir sauvegardé ce nombre...
+	// mï¿½thode qui incrï¿½mente le compteur de dessins pour avoir un id unique pour chaque dessin :
+	// dans une version ultï¿½rieure avec rï¿½cupï¿½ration de dessins Ã  aprtir d'une sauvegarde, il faudra ï¿½galement avoir sauvegardï¿½ ce nombre...
 	public int nextId () {
 		idDrawing++ ; 
 		return idDrawing ; 
 	}
 
-	// méthode permettant de récupérer la liste des dessins : utile lorsqu'un éditeur client se connecte 
+	// mï¿½thode permettant de rï¿½cupï¿½rer la liste des dessins : utile lorsqu'un ï¿½diteur client se connecte 
 	@Override
 	public synchronized ArrayList<RemoteDessinServeur> getDessinsPartages () throws RemoteException {
 		return new ArrayList<RemoteDessinServeur> (sharedDrawings.values()) ;
 	}
 
-	// méthode indiquant quel est le port d'émission/réception Ã  utiliser pour le client qui rejoint le serveur
-	// on utilise une valeur arbitraitre de port qu'on incrémente de 1 Ã  chaque arrivée d'un nouveau client
+	// mï¿½thode indiquant quel est le port d'ï¿½mission/rï¿½ception Ã  utiliser pour le client qui rejoint le serveur
+	// on utilise une valeur arbitraitre de port qu'on incrï¿½mente de 1 Ã  chaque arrivï¿½e d'un nouveau client
 	// cela permettra d'avoir plusieurs clients sur la mÃªme machine, chacun avec un canal de communication distinct
-	// sur un port différent des autres clients
+	// sur un port diffï¿½rent des autres clients
 	@Override
 	public int getPortEmission (InetAddress clientAdress) throws RemoteException {
 		EmetteurUnicast transmitter = new EmetteurUnicast (clientAdress, portEmission++) ;
@@ -149,7 +149,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		return (transmitter.getPortEmission ()) ;
 	}
 
-	// méthode permettant juste de vérifier que le serveur est lancé
+	// mï¿½thode permettant juste de vï¿½rifier que le serveur est lancï¿½
 	@Override
 	public void answer (String question) throws RemoteException {
 //		System.out.println ("SERVER : the question was : " + question) ;   
@@ -199,7 +199,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 		hm.put ("name", username);
 		// envoi des mises Ã  jour Ã  tous les clients, via la liste des Ã©metteurs
 		for (EmetteurUnicast sender : transmitters) {
-			sender.diffuseMessage ("In game", username, hm) ;
+			sender.diffuseMessage ("InGame", username, hm) ;
 		}
 	}
 	
