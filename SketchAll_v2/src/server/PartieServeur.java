@@ -73,6 +73,7 @@ public class PartieServeur {
 	
 	public void tryWord(String username, String word) {
 		if (word==words.get(0)) {
+			winners.add(username);
 			
 		}
 	}
