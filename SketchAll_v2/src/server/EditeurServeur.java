@@ -43,6 +43,7 @@ public class EditeurServeur extends UnicastRemoteObject implements RemoteEditeur
 	private HashMap<String, RemoteUserServeur> playerList = new HashMap<String, RemoteUserServeur> () ;
 	
 	private HashMap<String,String> loginList;
+	
 
 	// le constructeur du serveur : il le d�clare sur un port rmi de la machine d'ex�cution
 	protected EditeurServeur (String nomServeur, String nomMachineServeur, int portRMIServeur,	int portEmissionUpdate, HashMap<String,String> loginList) throws RemoteException {
