@@ -18,7 +18,7 @@ public class ZoneDeDessin extends JPanel {
 	String shapeOn = "Rectangle";
 	
 	
-	//dessin actuellement selectionné
+	//dessin actuellement selectionnï¿½
 	private DessinClient dessinSelect;
 
 
@@ -31,9 +31,12 @@ public class ZoneDeDessin extends JPanel {
 	public ZoneDeDessin(EditeurClient editor) {
 		this.editor = editor;
 		CreationListener CL = new CreationListener(editor, this);
-		addMouseListener(CL);
-		addMouseMotionListener(CL);
-		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		String username = editor.getFrame().getUsername();
+		if (editor.getFrame().getPlayer(username).isSketcher()) {
+			addMouseListener(CL);
+			addMouseMotionListener(CL);
+			setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		}
 		setPreferredSize(new Dimension(900, 600));
 		setRadius(radius);
 		setForeground(Color.red);

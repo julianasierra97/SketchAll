@@ -19,12 +19,9 @@ public class Player {
 		this.username = username;
 		this.points = 0;
 		
-		this.sketcher = false;
+		this.sketcher = random.nextBoolean();
 		this.proxy = proxy;
 		this.inGame=inGame;
-		
-		
-		//this.sketcher = true;
 	}
 
 	public int getPoints() {

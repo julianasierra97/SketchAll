@@ -42,7 +42,6 @@ public class ChatPane extends JPanel implements KeyListener {
 
 		panelSouth = new JPanel();
 		panelSouth.setLayout(new BorderLayout());
-		System.out.println(frame.getPlayer(frame.getUsername()).isSketcher());
 		if (!frame.getPlayer(frame.getUsername()).isSketcher()) {
 			textToSend = new JTextField();
 			textToSend.addKeyListener(this);
