@@ -41,11 +41,12 @@ public class UserServeur implements RemoteUserServeur, Serializable{
 		}
 		
 
-		public void setSketcher(boolean sketcher) throws RemoteException{
+		public void setSketcher(boolean sketcher, String word) throws RemoteException{
 			this.sketcher = sketcher;
 			HashMap<String, Object> hm = new HashMap <String, Object> () ;
 			hm.put("sketcher", sketcher);
 			hm.put ("name", this.username);
+			hm.put("word", word);
 			// envoi des mises à jour à tous les clients, via la liste des émetteurs
 			for (EmetteurUnicast sender : emetteurs) {
 				sender.diffuseMessage ("Sketcher", getUsername (), hm) ;
