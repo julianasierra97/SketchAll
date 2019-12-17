@@ -219,7 +219,7 @@ public class ColorPane extends JPanel {
         gbc.gridx++;
         add(strawberryButton, gbc);
         gbc.gridx++;
-        add(coralButton, gbc);
+        add(greyButton, gbc);
         gbc.gridx++;      
         add(chocolateButton, gbc);
         gbc.gridx++;
@@ -241,7 +241,7 @@ public class ColorPane extends JPanel {
         gbc.gridx++;
         add(limeButton, gbc);
         gbc.gridx++;
-        add(mintButton, gbc);
+        add(whiteButton, gbc);
         gbc.gridx++;       
         add(navyButton, gbc);
         gbc.gridx++;
@@ -257,7 +257,7 @@ public class ColorPane extends JPanel {
         gbc.gridx++;
         add(purpleButton, gbc);
         gbc.gridx++;
-        add(raspberryButton, gbc);
+        add(blackButton, gbc);
         gbc.gridx++;
         add(magentaButton, gbc);
         
@@ -266,15 +266,15 @@ public class ColorPane extends JPanel {
 //        gbc.gridy = 3; 
 //        add(lilaButton, gbc);
 //        gbc.gridx++;       
-//        add(blackButton, gbc);
+//        add(raspberryButton, gbc);
 //        gbc.gridx++;
 //        add(charcoalButton, gbc);
 //        gbc.gridx++;
-//        add(greyButton, gbc);
+//        add(coralButton, gbc);
 //        gbc.gridx++;
 //        add(platinumButton, gbc);
 //        gbc.gridx++;
-//        add(whiteButton, gbc);
+//        add(mintButton, gbc);
 //        gbc.gridx++;
 	}
 	

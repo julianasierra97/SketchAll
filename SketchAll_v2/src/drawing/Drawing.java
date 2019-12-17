@@ -2,8 +2,11 @@ package drawing;
 
 import server.RemoteDessinServeur;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.rmi.RemoteException;
 
 
@@ -46,7 +49,14 @@ public class Drawing extends DessinClient {
 	
 	public void paint (Graphics graph) {
 		super.paint(graph) ;
-		graph.fillOval (0,0,getWidth(),getHeight()) ;
+		graph.drawLine (0,0,getWidth()/5,getHeight()/5) ;
 	}
+	
+	public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(10));
+        g2.draw(new Line2D.Float(0,0,getWidth(),getHeight()));
+        g2.draw(new Line2D.Float(getWidth(),0,0,getHeight()));
+    }
 	
 }
